@@ -1,0 +1,12 @@
+
+.cart-items {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .cart-item {
+    margin: 5px;
+    height: 100px;
+    width: 25%;
+    background-color: #f0f1ed;
+  }
