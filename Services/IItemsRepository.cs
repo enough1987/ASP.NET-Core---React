@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using reactredux.Models;
 
@@ -18,7 +17,5 @@ namespace reactredux.Services
 
         // update just a single item
         //Task<bool> UpdateItem(Item item);
-
-        Task Initialize();
     }
 }

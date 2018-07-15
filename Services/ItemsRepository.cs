@@ -72,44 +72,6 @@ namespace reactredux.Services
             }
         }
 
-        public async Task Initialize()
-        {
-            await AddItem(new Item
-            {
-                Id = "1",
-                Name = "Good 1",
-                Price = 1000
-            });
-            await AddItem(new Item
-            {
-                Id = "2",
-                Name = "Good 2",
-                Price = 777
-
-            });
-            await AddItem(new Item
-            {
-                Id = "3",
-                Name = "Good 3",
-                Price = 456
-
-            });
-            await AddItem(new Item
-            {
-                Id = "4",
-                Name = "Good 4",
-                Price = 987
-
-            });
-            await AddItem(new Item
-            {
-                Id = "5",
-                Name = "Good 5",
-                Price = 235
-
-            });
-        }
-
        
     }
 }
