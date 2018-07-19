@@ -24,6 +24,11 @@ export default props => (
             <Glyphicon glyph='th-list' /> Cart
           </NavItem>
         </LinkContainer>
+          <LinkContainer to={'/admin'}>
+              <NavItem>
+                  <Glyphicon glyph='th-list' /> Admin
+              </NavItem>
+          </LinkContainer>
       </Nav>
     </Navbar.Collapse>
   </Navbar>

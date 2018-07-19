@@ -11,17 +11,17 @@ const initialState = {
 };
 
 export const actionCreators = {
-  fetchItem: (id) => async (dispatch) => {
+  fetchItem: (InternalId) => async (dispatch) => {
 
     dispatch({ type: ITEM_TYPES.REQUEST_ITEM });
 
-    const url = `api/SampleData/GetItem?Id=${id}`;
+    const url = `api/SampleData/GetItem?Id=${InternalId}`;
     const response = await fetch(url);
     const item = await response.json();
 
     setTimeout(() => {
       dispatch({ type: ITEM_TYPES.SET_ITEM, payload: item });
-    }, 1000);
+    }, 100);
   }
 };
 

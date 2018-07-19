@@ -1,15 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;  
-using Microsoft.EntityFrameworkCore; // пространство имен EntityFramework
-using MongoDB.Driver;
+using Microsoft.Extensions.Logging;
 using reactredux.Services;
 using reactredux.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace reactredux
 {
@@ -26,15 +25,24 @@ namespace reactredux
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.TokenValidationParameters = AuthOptions.GetTokenValidationParameters();
+                    });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // DB
             services.Configure<Setting>(options =>
             {
+                // DB
                 options.ConnectionString
                     = Configuration.GetSection("MongoConnection:ConnectionString").Value;
                 options.Database
                     = Configuration.GetSection("MongoConnection:Database").Value;
+                // JWT
+
             });
 
             // add repository service

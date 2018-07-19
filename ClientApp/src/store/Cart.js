@@ -18,7 +18,7 @@ export const actionCreators = {
 
     setTimeout(() => {
       dispatch({ type: SHOP_TYPES.SET_ITEMS, payload: items });
-    }, 1000);
+    }, 100);
   }
 };
 

@@ -1,9 +1,6 @@
-
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using reactredux.Models;
+using MongoDB.Bson;
 using reactredux.Services;
 
 namespace reactredux.Controllers
@@ -16,8 +13,6 @@ namespace reactredux.Controllers
         public SampleDataController(IItemsRepository itemsRepository)
         {
             _itemsRepository = itemsRepository;
-
-            //_itemsRepository.Initialize();
         }
 
         [HttpGet("[action]")]
@@ -29,7 +24,7 @@ namespace reactredux.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<JsonResult> GetItems(int index)
+        public async Task<JsonResult> GetItems()
         {
 
             var items = await _itemsRepository.GetAllItems();

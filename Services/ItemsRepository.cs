@@ -10,11 +10,11 @@ namespace reactredux.Services
 {
     public class ItemsRepository : IItemsRepository
     {
-        private readonly ItemContext _context = null;
+        private readonly DBContext _context = null;
 
         public ItemsRepository(IOptions<Setting> setting)
         {
-            _context = new ItemContext(setting);
+            _context = new DBContext(setting);
         }
 
         public async Task<IEnumerable<Item>> GetAllItems()
@@ -22,8 +22,8 @@ namespace reactredux.Services
             try
             {
                 return await _context.Items
-                        .Find(_ => true)
-                        .ToListAsync();
+                    .Find(_ => true)
+                    .ToListAsync();
             }
             catch (Exception ex)
             {
@@ -38,9 +38,10 @@ namespace reactredux.Services
             try
             {
                 ObjectId internalId = GetInternalId(id);
+
                 return await _context.Items
                                      .Find(item => item.Id == id
-                                        || item.InternalId == internalId)
+                                    || item.InternalId == internalId)
                                 .FirstOrDefaultAsync();
             }
             catch (Exception ex)
@@ -49,6 +50,7 @@ namespace reactredux.Services
                 throw ex;
             }
         }
+
 
         private ObjectId GetInternalId(string id)
         {
@@ -72,6 +74,7 @@ namespace reactredux.Services
             }
         }
 
-       
+
     }
 }
+

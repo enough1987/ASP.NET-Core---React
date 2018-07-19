@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 import * as Cart from './Cart';
 import * as Item from './Item';
+import * as Admin from './Admin';
 
 export default function configureStore(history, initialState) {
   const reducers = {
     items: Cart.reducer,
-    item: Item.reducer
+    item: Item.reducer,
+    user: Admin.reducer
   };
 
   const middleware = [

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using reactredux.Models;
 
 namespace reactredux.Services

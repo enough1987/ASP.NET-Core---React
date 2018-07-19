@@ -21,6 +21,9 @@ class Cart extends Component {
         <h1> Cart </h1>
         <div className="cart-items" >
         { this.props.items.map((item) => {
+
+          console.log(item);
+
           return (
             <div key={item.id} className="cart-item" >
               <p> { item.name } </p>

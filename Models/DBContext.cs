@@ -4,11 +4,11 @@ using MongoDB.Driver;
 
 namespace reactredux
 {
-    public class ItemContext
+    public class DBContext
     {
         private readonly IMongoDatabase _database = null;
 
-        public ItemContext(IOptions<Setting> settings)
+        public DBContext(IOptions<Setting> settings)
         {
             //string connectionString = settings.Value.ConnectionString;
             //var connection = new MongoUrlBuilder(connectionString);
@@ -25,6 +25,14 @@ namespace reactredux
             get
             {
                 return _database.GetCollection<Item>("Items");
+            }
+        }
+
+        public IMongoCollection<User> Users
+        {
+            get
+            {
+                return _database.GetCollection<User>("Users");
             }
         }
     }
