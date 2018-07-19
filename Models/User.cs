@@ -13,8 +13,8 @@ namespace reactredux.Models
 
             public string Id { get; set; }
 
-            [Required(ErrorMessage = "Name is not set")]
-            public string Login { get; set; }
+            [Required(ErrorMessage = "Username is not set")]
+            public string Username { get; set; }
 
             [Required(ErrorMessage = "Email is not set")]
             public string Email { get; set; }

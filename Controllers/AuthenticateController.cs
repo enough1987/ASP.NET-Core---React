@@ -17,8 +17,8 @@ namespace reactredux.Controllers
     {
         private List<User> users = new List<User>
         {
-            new User {Login="admin@gmail.com", Password="12345", Role = "admin" },
-            new User { Login="qwerty", Password="55555", Role = "user" }
+            new User {Username="admin@gmail.com", Password="12345", Role = "admin" },
+			new User { Username="qwerty", Password="55555", Role = "user" }
         };
 
         [HttpPost("/token")]
@@ -59,12 +59,12 @@ namespace reactredux.Controllers
 
         private ClaimsIdentity GetIdentity(string username, string password)
         {
-            User user = users.FirstOrDefault(x => x.Login == username && x.Password == password);
+			User user = users.FirstOrDefault(x => x.Username == username && x.Password == password);
             if (user != null)
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+					new Claim(ClaimsIdentity.DefaultNameClaimType, user.Username),
                     new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role)
                 };
                 ClaimsIdentity claimsIdentity =

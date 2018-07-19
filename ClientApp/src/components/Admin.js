@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { actionCreators } from '../store/Admin';
+import Login from './Login';
 
 class Admin extends Component {
 
@@ -18,19 +19,20 @@ class Admin extends Component {
         }
 
         if ( !this.props.isAuthenticated ) {
-            return <div> User is not authenticated  </div>
+            return <Login />
         }
 
         return (
             <div>
 
                 Admin panel
+
             </div>
         );
     }
 }
 
 export default connect(
-    state => state.user,
+    state => state,
     dispatch => bindActionCreators(actionCreators, dispatch)
 )(Admin);
