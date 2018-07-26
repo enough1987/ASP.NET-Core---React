@@ -16,14 +16,33 @@ export const actionCreators = {
     const items = await response.json();
     console.log(items);
 
-    setTimeout(() => {
-      dispatch({ type: SHOP_TYPES.SET_ITEMS, payload: items });
-    }, 100);
+    dispatch({ type: SHOP_TYPES.SET_ITEMS, payload: items });
+  },
+  add: (newItem) => async (dispatch) => {
+
+    const url = `api/SampleData/add`;
+
+    const formData = new FormData();
+    Object.keys(newItem).forEach(key => formData.append(key, newItem[key]));
+
+    const response = await fetch(url, {
+          method: 'POST',
+          body: formData
+      });
+    const item = await response.json();
+
+    console.log(formData, item);
+
+    if ( item.Result ) {
+      return true;
+    }
+    return false
+
   }
+
 };
 
-export const reducer = (state, action) => {
-  state = state || initialState;
+export const reducer = (state = initialState, action = {}) => {
 
   if (action.type === SHOP_TYPES.SET_ITEMS) {
     return {

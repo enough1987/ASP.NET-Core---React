@@ -1,22 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MongoDB.Bson;
 using reactredux.Models;
 
 namespace reactredux.Services
 {
     public interface IItemsRepository
     {
-        Task<IEnumerable<Item>> GetAllItems();
-        Task<Item> GetItem(string id);
+        IEnumerable<Item> GetAll();
+
+        Item GetById(string id);
 
         // add new item
-        Task AddItem(Item item);
-
-        // remove a single document / note
-        //Task<bool> RemoveItem(string id);
+        Task<bool> AddItem(Item item);
 
         // update just a single item
-        //Task<bool> UpdateItem(Item item);
+        Task<bool> UpdateItem(Item item);
+
+        // remove a single document / note
+        Task<bool> DeleteItem(string id);
     }
 }

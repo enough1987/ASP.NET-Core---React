@@ -28,7 +28,7 @@ namespace reactredux1.Controllers
         [HttpGet("[action]")]
         public JsonResult GetItems(int index)
         {
-            var items = _itemsRepository.GetAllItems();
+            var items = _itemsRepository.GetAll();
             Console.WriteLine(" +==> ");
             Console.WriteLine(items);
 

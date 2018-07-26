@@ -9,6 +9,7 @@ using reactredux.Services;
 using reactredux.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 
 namespace reactredux
 {
@@ -25,15 +26,6 @@ namespace reactredux
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    .AddJwtBearer(options =>
-                    {
-                        options.RequireHttpsMetadata = false;
-                        options.TokenValidationParameters = AuthOptions.GetTokenValidationParameters();
-                    });
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
             services.Configure<Setting>(options =>
             {
                 // DB
@@ -45,8 +37,21 @@ namespace reactredux
 
             });
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.RequireHttpsMetadata = false;
+                        options.TokenValidationParameters = AuthOptions.GetTokenValidationParameters();
+                    });
+
+            services.AddTransient<AppDbContext>();
             // add repository service
             services.AddTransient<IItemsRepository, ItemsRepository>();
+
+            services.AddMvc()
+                    .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                    .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
 
             // In production, the React files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

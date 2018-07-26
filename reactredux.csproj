@@ -35,6 +35,8 @@
     <Compile Remove="Controllers\SampleDataController %28copy%29.cs" />
     <Compile Remove="Controllers\SampleDataController %28copy%29.cs" />
     <Compile Remove="Controllers\SampleDataController %28copy%29.cs" />
+    <Compile Remove="Services\AppRepository.cs" />
+    <Compile Remove="Controllers\SampleDataController %28copy%29.cs" />
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->

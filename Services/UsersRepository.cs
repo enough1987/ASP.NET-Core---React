@@ -5,16 +5,17 @@ using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using reactredux.Models;
+using reactredux;
 
 namespace reactredux.Services
 {
 	public class UsersRepository : IUsersRepository
     {
-            private readonly DBContext _context = null;
+        private readonly AppDbContext appDbContext = null;
 
-         public UsersRepository(IOptions<Setting> setting)
+        public UsersRepository(AppDbContext _appDbContext)
          {
-                _context = new DBContext(setting);
+            appDbContext = _appDbContext;
          }
 
         public async Task<User> GetUser(string id) 
@@ -23,7 +24,7 @@ namespace reactredux.Services
             {
                 ObjectId internalId = GetInternalId(id);
 
-                return await _context.Users
+                return await appDbContext.Users
                      .Find(user => user.Id == id
                     || user.InternalId == internalId)
                 .FirstOrDefaultAsync();

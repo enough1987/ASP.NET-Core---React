@@ -4,11 +4,11 @@ using MongoDB.Driver;
 
 namespace reactredux
 {
-    public class DBContext
+    public class AppDbContext
     {
         private readonly IMongoDatabase _database = null;
 
-        public DBContext(IOptions<Setting> settings)
+        public AppDbContext(IOptions<Setting> settings)
         {
             //string connectionString = settings.Value.ConnectionString;
             //var connection = new MongoUrlBuilder(connectionString);

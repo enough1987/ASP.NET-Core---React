@@ -33,8 +33,7 @@ export const actionCreators = {
     }
 };
 
-export const reducer = (state, action) => {
-    state = state || initialState;
+export const reducer = (state = initialState, action = {}) => {
 
     if (action.type === LOGIN_TYPES.REQUEST_LOGIN) {
         return {

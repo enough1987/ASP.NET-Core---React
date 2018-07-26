@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using reactredux.Models;
@@ -10,71 +10,67 @@ namespace reactredux.Services
 {
     public class ItemsRepository : IItemsRepository
     {
-        private readonly DBContext _context = null;
+        private readonly AppDbContext appDBContext = null;
 
-        public ItemsRepository(IOptions<Setting> setting)
+        public ItemsRepository(AppDbContext _appDbContext)
         {
-            _context = new DBContext(setting);
+            appDBContext = _appDbContext;
         }
 
-        public async Task<IEnumerable<Item>> GetAllItems()
+        public IEnumerable<Item> GetAll()
         {
-            try
-            {
-                return await _context.Items
-                    .Find(_ => true)
-                    .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                // log or manage the exception
-                throw ex;
-            }
+            return appDBContext.Items
+                               .Find(m => true)
+                               .ToList();
         }
 
         // query after Id or InternalId (BSonId value)
-        public async Task<Item> GetItem(string id)
+        public Item GetById(string id)
         {
-            try
-            {
-                ObjectId internalId = GetInternalId(id);
-
-                return await _context.Items
-                                     .Find(item => item.Id == id
-                                    || item.InternalId == internalId)
-                                .FirstOrDefaultAsync();
-            }
-            catch (Exception ex)
-            {
-                // log or manage the exception
-                throw ex;
-            }
+            return appDBContext.Items
+                               .Find(m => m.Id == id)
+                               .FirstOrDefault();
         }
 
-
-        private ObjectId GetInternalId(string id)
+        public Task<bool> AddItem(Item item)
         {
-            ObjectId internalId;
-            if (!ObjectId.TryParse(id, out internalId))
-                internalId = ObjectId.Empty;
-
-            return internalId;
+            var result = appDBContext.Items
+                               .InsertOneAsync(item);
+            
+            return Task.FromResult(true);
         }
 
-        public async Task AddItem(Item item)
+        public Task<bool> UpdateItem(Item item)
         {
-            try
-            {
-                await _context.Items.InsertOneAsync(item);
+          
+            //Build the where condition  
+            var filter = Builders<Item>.Filter.Eq("Id", item.Id);  
+            //Build the update statement   
+            var updatestatement = Builders<Item>.Update.Set("Id", item.Id)
+                                                .Set("Name", item.Name)
+                                                .Set("Price", item.Price);  
+            //fetch the details from CustomerDB based on id and pass into view  
+            var result = appDBContext.Items.UpdateOne(filter, updatestatement);
+
+            if (result.IsAcknowledged == false)  
+            {  
+                return Task.FromResult(false);  
             }
-            catch (Exception ex)
-            {
-                // log or manage the exception
-                throw ex;
-            }
+            return Task.FromResult(true);
         }
 
+        public Task<bool> DeleteItem(string id)
+        {
+ 
+            //Delete the customer record  
+            var result = appDBContext.Items.DeleteOne<Item>(item => item.Id == id); 
 
+            if (result.IsAcknowledged == false)  
+            {  
+                return Task.FromResult(false);
+            }
+            return Task.FromResult(true); 
+        }
     }
 }
 

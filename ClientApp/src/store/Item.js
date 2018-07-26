@@ -1,6 +1,9 @@
 ﻿
+
 const ITEM_TYPES = Object.freeze({
   REQUEST_ITEM : 'REQUEST_ITEM',
+  REQUEST_ITEM_UPDATE : 'REQUEST_ITEM_UPDATE',
+  REQUEST_ITEM_DELETE: 'REQUEST_ITEM_DELETE',
   SET_ITEM : 'SET_ITEM'
 });
 
@@ -11,22 +14,58 @@ const initialState = {
 };
 
 export const actionCreators = {
-  fetchItem: (InternalId) => async (dispatch) => {
+  fetchItem: (id) => async (dispatch) => {
 
     dispatch({ type: ITEM_TYPES.REQUEST_ITEM });
 
-    const url = `api/SampleData/GetItem?Id=${InternalId}`;
+    const url = `api/SampleData/GetItem?Id=${id}`;
     const response = await fetch(url);
     const item = await response.json();
 
-    setTimeout(() => {
-      dispatch({ type: ITEM_TYPES.SET_ITEM, payload: item });
-    }, 100);
+    dispatch({ type: ITEM_TYPES.SET_ITEM, payload: item });
+
+  },
+  update: (newItem) => async (dispatch) => {
+      console.log(newItem);
+      if ( !newItem.Name || !newItem.Price) {
+          return false;
+      }
+
+      dispatch({ type: ITEM_TYPES.REQUEST_ITEM_UPDATE });
+
+      const url = `api/SampleData/Update`;
+
+      const formData = new FormData();
+      Object.keys(newItem).forEach(key => formData.append(key, newItem[key]));
+
+      const response = await fetch(url, {
+          method: 'POST',
+          body: formData
+      });
+
+      console.log(formData, response);
+
+      if ( response.ok ) {
+          return true;
+      }
+      return false
+  },
+  delete: (id) => async (dispatch) => {
+      console.log(id);
+      dispatch({ type: ITEM_TYPES.REQUEST_ITEM_DELETE });
+
+      const url = `api/SampleData/Delete?id=`+id;
+
+      const response = await fetch(url);
+
+      if ( response.ok ) {
+          return true;
+      }
+      return false
   }
 };
 
-export const reducer = (state, action) => {
-  state = state || initialState;
+export const reducer = (state = initialState, action = {}) => {
 
   if (action.type === ITEM_TYPES.REQUEST_ITEM) {
     return { 
