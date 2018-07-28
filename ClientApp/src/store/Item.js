@@ -18,7 +18,7 @@ export const actionCreators = {
 
     dispatch({ type: ITEM_TYPES.REQUEST_ITEM });
 
-    const url = `api/SampleData/GetItem?Id=${id}`;
+    const url = `api/Items/GetItem?Id=${id}`;
     const response = await fetch(url);
     const item = await response.json();
 
@@ -33,7 +33,7 @@ export const actionCreators = {
 
       dispatch({ type: ITEM_TYPES.REQUEST_ITEM_UPDATE });
 
-      const url = `api/SampleData/Update`;
+      const url = `api/Items/Update`;
 
       const formData = new FormData();
       Object.keys(newItem).forEach(key => formData.append(key, newItem[key]));
@@ -54,7 +54,7 @@ export const actionCreators = {
       console.log(id);
       dispatch({ type: ITEM_TYPES.REQUEST_ITEM_DELETE });
 
-      const url = `api/SampleData/Delete?id=`+id;
+      const url = `api/Items/Delete?id=`+id;
 
       const response = await fetch(url);
 

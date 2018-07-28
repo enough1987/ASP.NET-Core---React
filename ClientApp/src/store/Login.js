@@ -14,7 +14,7 @@ export const actionCreators = {
 
         dispatch({ type: LOGIN_TYPES.REQUEST_LOGIN });
 
-        const url = `Authenticate/token`;
+        const url = `api/Authenticate/Token`;
 
         let formData  = new FormData();
 
@@ -27,7 +27,7 @@ export const actionCreators = {
             body: formData
         });
 
-        console.log(response);
+        console.log(response, data);
 
 
     }

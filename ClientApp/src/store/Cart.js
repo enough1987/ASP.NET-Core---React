@@ -11,7 +11,7 @@ const initialState = {
 export const actionCreators = {
   fetchItems: () => async (dispatch) => {    
 
-    const url = `api/SampleData/GetItems`;
+    const url = `api/Items/GetAll`;
     const response = await fetch(url);
     const items = await response.json();
     console.log(items);
@@ -20,7 +20,7 @@ export const actionCreators = {
   },
   add: (newItem) => async (dispatch) => {
 
-    const url = `api/SampleData/add`;
+    const url = `api/Items/add`;
 
     const formData = new FormData();
     Object.keys(newItem).forEach(key => formData.append(key, newItem[key]));

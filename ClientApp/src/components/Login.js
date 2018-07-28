@@ -50,7 +50,7 @@ class Login extends Component {
                     <input
                         type="button"
                         className='btn btn-primary'
-                        onClick={this.props.login}
+                        onClick={this.handleSubmit}
                         disabled={!this.state.formValid}
                         value="Sign up"
                     />
@@ -74,6 +74,10 @@ class Login extends Component {
                 [name]: value
             }
         }, () => { this.validateField(name, value) });
+    }
+
+    handleSubmit = () => {
+        this.props.login(this.state.user);
     }
 
     validateField = (fieldName, value) => {

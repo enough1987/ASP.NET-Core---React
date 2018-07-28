@@ -6,17 +6,16 @@ using reactredux.Services;
 
 namespace reactredux.Controllers
 {
-    [Route("api/[controller]")]
-    public class SampleDataController : Controller
+    public class ItemsController : Controller
     {
         private readonly IItemsRepository itemsRepository;
 
-        public SampleDataController(IItemsRepository _itemsRepository)
+        public ItemsController(IItemsRepository _itemsRepository)
         {
             itemsRepository = _itemsRepository;
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public JsonResult GetItem(string id)
         {
             var item = itemsRepository.GetById(id);
@@ -24,8 +23,8 @@ namespace reactredux.Controllers
             return Json(item);
         }
 
-        [HttpGet("[action]")]
-        public JsonResult GetItems()
+        [HttpGet]
+        public JsonResult GetAll()
         {
 
             var items = itemsRepository.GetAll();
@@ -33,7 +32,7 @@ namespace reactredux.Controllers
             return Json(items);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost]
         public JsonResult Add(Item item)
         {
 
@@ -42,7 +41,7 @@ namespace reactredux.Controllers
             return Json(res);
         }
 
-        [HttpPost("[action]")]
+        [HttpPost]
         public JsonResult Update(Item item)
         {
 
@@ -51,7 +50,7 @@ namespace reactredux.Controllers
             return Json(res);
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public JsonResult Delete(string id)
         {
             

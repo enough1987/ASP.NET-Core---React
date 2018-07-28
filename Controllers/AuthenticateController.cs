@@ -17,21 +17,21 @@ namespace reactredux.Controllers
     {
         private List<User> users = new List<User>
         {
-            new User {Username="admin@gmail.com", Password="12345", Role = "admin" },
-			new User { Username="qwerty", Password="55555", Role = "user" }
+            new User {Email="admin@gmail.com", Password="12345", Role = "admin" },
+            new User { Email="qwerty@gmail.com", Password="55555", Role = "user" }
         };
 
-        [HttpPost("/token")]
+        [HttpPost]
         public async Task Token()
         {
-            var username = Request.Form["username"];
+            var email = Request.Form["email"];
             var password = Request.Form["password"];
 
-            var identity = GetIdentity(username, password);
+            var identity = GetIdentity(email, password);
             if (identity == null)
             {
                 Response.StatusCode = 400;
-                await Response.WriteAsync("Invalid username or password.");
+                await Response.WriteAsync("Invalid email or password.");
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace reactredux.Controllers
             var response = new
             {
                 access_token = encodedJwt,
-                username = identity.Name
+                email = identity.Name
             };
 
             // сериализация ответа
@@ -57,14 +57,14 @@ namespace reactredux.Controllers
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
 
-        private ClaimsIdentity GetIdentity(string username, string password)
+        private ClaimsIdentity GetIdentity(string email, string password)
         {
-			User user = users.FirstOrDefault(x => x.Username == username && x.Password == password);
+			User user = users.FirstOrDefault(x => x.Email == email && x.Password == password);
             if (user != null)
             {
                 var claims = new List<Claim>
                 {
-					new Claim(ClaimsIdentity.DefaultNameClaimType, user.Username),
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
                     new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role)
                 };
                 ClaimsIdentity claimsIdentity =

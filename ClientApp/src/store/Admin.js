@@ -16,7 +16,7 @@ export const actionCreators = {
 
         dispatch({ type: USER_TYPES.REQUEST_IS_AUTHENTICATED });
 
-            const url = `Admin/IsAdmin`;
+            const url = `api/Admin/IsAdmin`;
             const response = await fetch(url, {
                 method: "POST"
             });
