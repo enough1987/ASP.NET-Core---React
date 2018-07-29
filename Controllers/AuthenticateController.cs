@@ -54,6 +54,7 @@ namespace reactredux.Controllers
 
             // сериализация ответа
             Response.ContentType = "application/json";
+            Response.Headers.Add("JwtToken", encodedJwt);
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }
 

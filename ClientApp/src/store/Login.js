@@ -1,3 +1,4 @@
+import axios from '../interceptors/interceptors';
 
 const LOGIN_TYPES = Object.freeze({
     REQUEST_LOGIN: 'REQUEST_LOGIN',
@@ -22,10 +23,10 @@ export const actionCreators = {
             formData.append(name, data[name]);
         }
 
-        const response = await fetch(url, {
-            method: "POST",
-            body: formData
-        });
+        const response = await axios.post(
+            url,
+            formData
+        );
 
         console.log(response, data);
 

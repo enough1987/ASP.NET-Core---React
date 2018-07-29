@@ -14,7 +14,7 @@ namespace reactredux
         public const string ISSUER = "MyAuthServer"; // издатель токена
         public const string AUDIENCE = "http://localhost:5001/"; // потребитель токена
         const string KEY = "mysupersecret_secretkey!123";   // ключ для шифрации
-        public const int LIFETIME = 1; // время жизни токена - 1 минута
+        public const int LIFETIME = 10; // время жизни токена - 10 минут
 
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {

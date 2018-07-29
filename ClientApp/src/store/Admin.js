@@ -1,3 +1,4 @@
+import axios from '../interceptors/interceptors';
 
 const USER_TYPES = Object.freeze({
     REQUEST_IS_AUTHENTICATED: 'REQUEST_IS_AUTHENTICATED',
@@ -17,9 +18,7 @@ export const actionCreators = {
         dispatch({ type: USER_TYPES.REQUEST_IS_AUTHENTICATED });
 
             const url = `api/Admin/IsAdmin`;
-            const response = await fetch(url, {
-                method: "POST"
-            });
+            const response = await axios.post(url);
 
             console.log(response);
 
