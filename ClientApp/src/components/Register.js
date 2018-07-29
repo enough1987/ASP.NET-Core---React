@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {actionCreators} from '../store/Login';
 import { bindActionCreators } from 'redux';
 
-class Login extends Component {
+class Register extends Component {
 
     constructor(props) {
         super(props);
@@ -12,8 +12,9 @@ class Login extends Component {
             user: {
                 email: '',
                 password: '',
+                confirm_password: ''
             },
-            formErrors: {email: '', password: ''},
+            formErrors: {email: '', password: '', confirm_password: ''},
             emailValid: false,
             passwordValid: false,
             formValid: false
@@ -28,20 +29,28 @@ class Login extends Component {
 
                 <form className='demoForm'>
                     <div className='form-group'>
-                    <label htmlFor='email'>Email address</label>
-                    <input type='email'
-                            className='form-control'
-                            name='email'
-                            value={this.state.user.email}
-                            onChange={this.handleUserInput} />
+                        <label htmlFor='email'>Email address</label>
+                        <input type='email'
+                               className='form-control'
+                               name='email'
+                               value={this.state.user.email}
+                               onChange={this.handleUserInput} />
                     </div>
-                        <div className='form-group'>
-                         <label htmlFor='password'>Password</label>
+                    <div className='form-group'>
+                        <label htmlFor='password'>Password</label>
                         <input type='password'
-                            className='form-control'
-                            name='password'
-                            value={this.state.user.password}
-                            onChange={this.handleUserInput} />
+                               className='form-control'
+                               name='password'
+                               value={this.state.user.password}
+                               onChange={this.handleUserInput} />
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor='confirm_password'>Confirm Password</label>
+                        <input type='password'
+                               className='form-control'
+                               name='confirm_password'
+                               value={this.state.user.confirm_password}
+                               onChange={this.handleUserInput} />
                     </div>
 
                     <FormErrors formErrors={this.state.formErrors} />
@@ -54,10 +63,6 @@ class Login extends Component {
                         value="Sign up"
                     />
                 </form>
-
-                <div>
-                    Username="admin@gmail.com", Password="12345"
-                </div>
 
             </div>
         );
@@ -89,7 +94,7 @@ class Login extends Component {
                 emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
                 fieldValidationErrors.email = emailValid ? '' : ' is invalid';
                 break;
-            case 'password':
+            case 'password && confirm_password':
                 passwordValid = value.length >= 5;
                 fieldValidationErrors.password = passwordValid ? '': ' is too short';
                 break;
@@ -114,4 +119,4 @@ class Login extends Component {
 export default connect(
     state => state,
     dispatch => bindActionCreators(actionCreators, dispatch)
-)(Login);
+)(Register);

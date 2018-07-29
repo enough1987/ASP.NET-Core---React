@@ -6,19 +6,15 @@ namespace reactredux
 {
     public class AuthOptions
     {
-        public const bool VALIDATE_ISSUER = true;
-        public const bool VALIDATE_AUDIENCE = true;
-        public const bool VALIDATE_LIFE_TIME = true;
-        public const bool VALIDATE_ISSUER_SIGNING_KEY = true;
 
         public const string ISSUER = "MyAuthServer"; // издатель токена
-        public const string AUDIENCE = "http://localhost:5001/"; // потребитель токена
+        public const string AUDIENCE = "http://localhost:5000/"; // потребитель токена
         const string KEY = "mysupersecret_secretkey!123";   // ключ для шифрации
         public const int LIFETIME = 10; // время жизни токена - 10 минут
 
         public static SymmetricSecurityKey GetSymmetricSecurityKey()
         {
-            return new SymmetricSecurityKey(Encoding.ASCII.GetBytes(KEY));
+            return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(KEY));
         }
 
         public static TokenValidationParameters GetTokenValidationParameters() 
@@ -26,21 +22,22 @@ namespace reactredux
             return new TokenValidationParameters
             {
                 // укзывает, будет ли валидироваться издатель при валидации токена
-                ValidateIssuer = AuthOptions.VALIDATE_ISSUER,
+                ValidateIssuer = false,
                 // строка, представляющая издателя
-                ValidIssuer = AuthOptions.ISSUER,
+                ValidIssuer = ISSUER,
 
                 // будет ли валидироваться потребитель токена
-                ValidateAudience = AuthOptions.VALIDATE_AUDIENCE,
+                ValidateAudience = false,
                 // установка потребителя токена
-                ValidAudience = AuthOptions.AUDIENCE,
-                // будет ли валидироваться время существования
-                ValidateLifetime = AuthOptions.VALIDATE_LIFE_TIME,
+                ValidAudience = AUDIENCE,
 
-                // установка ключа безопасности
-                IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                // будет ли валидироваться время существования
+                ValidateLifetime = false,
+
                 // валидация ключа безопасности
-                ValidateIssuerSigningKey = AuthOptions.VALIDATE_ISSUER_SIGNING_KEY,
+                ValidateIssuerSigningKey = false,
+                // установка ключа безопасности
+                IssuerSigningKey = GetSymmetricSecurityKey()
             };
         }
     }

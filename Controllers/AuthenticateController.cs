@@ -10,6 +10,8 @@ using Newtonsoft.Json;
 using System.Security.Claims;
 using reactredux.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Configuration;
+using System.Text;
 
 namespace reactredux.Controllers
 {
@@ -20,6 +22,13 @@ namespace reactredux.Controllers
             new User {Email="admin@gmail.com", Password="12345", Role = "admin" },
             new User { Email="qwerty@gmail.com", Password="55555", Role = "user" }
         };
+
+        public IConfiguration Configuration { get; }
+
+        public AuthenticateController (IConfiguration configuration) 
+        {
+            Configuration = configuration;
+        }
 
         [HttpPost]
         public async Task Token()
@@ -35,15 +44,18 @@ namespace reactredux.Controllers
                 return;
             }
 
-            var now = DateTime.UtcNow;
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Security:Tokens:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
             // создаем JWT-токен
             var jwt = new JwtSecurityToken(
-                    issuer: AuthOptions.ISSUER,
-                    audience: AuthOptions.AUDIENCE,
-                    notBefore: now,
-                    claims: identity.Claims,
-                    expires: now.Add(TimeSpan.FromMinutes(AuthOptions.LIFETIME)),
-                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+                    Configuration["Security:Tokens:Issuer"],
+                    Configuration["Security:Tokens:Audience"],
+                    identity.Claims,
+                expires: DateTime.Now.AddMinutes(10),
+                signingCredentials: creds
+            );
+
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
             var response = new
@@ -56,7 +68,7 @@ namespace reactredux.Controllers
             Response.ContentType = "application/json";
             Response.Headers.Add("JwtToken", encodedJwt);
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
-        }
+        }            
 
         private ClaimsIdentity GetIdentity(string email, string password)
         {
@@ -65,8 +77,8 @@ namespace reactredux.Controllers
             {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                    new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role)
+                    new Claim("Email", user.Email),
+                    new Claim("Role", user.Role)
                 };
                 ClaimsIdentity claimsIdentity =
                 new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,

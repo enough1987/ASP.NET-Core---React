@@ -8,7 +8,7 @@ const USER_TYPES = Object.freeze({
 
 const initialState = {
     user: {},
-    isLoading: false,
+    isLoading: true,
     isAuthenticated: false
 };
 
@@ -18,18 +18,26 @@ export const actionCreators = {
         dispatch({ type: USER_TYPES.REQUEST_IS_AUTHENTICATED });
 
             const url = `api/Admin/IsAdmin`;
-            const response = await axios.post(url);
-
-            console.log(response);
-
-            if ( response.status == 401) {
-                return dispatch({ type: USER_TYPES.IS_NOT_AUTHENTICATED });
-            }
-            //const items = await response.json();
-
-            dispatch({ type: USER_TYPES.IS_AUTHENTICATED });
-
-
+            const response = await axios.post(url)
+                .then((data) => {
+                    console.log('++++++', data, );
+                    const token = localStorage.getItem("jwttoken");
+                    const user = actionCreators.parseJwt(token);
+                    console.log(user);
+                    dispatch({ type: USER_TYPES.IS_AUTHENTICATED });
+                })
+                .catch((e) => {
+                    console.log('------');
+                    const {status} = e.response;
+                    if (status === 401) {
+                        dispatch({ type: USER_TYPES.IS_NOT_AUTHENTICATED });
+                    }
+                });
+    },
+    parseJwt: (token) => {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace('-', '+').replace('_', '/');
+        return JSON.parse(window.atob(base64));
     }
 };
 

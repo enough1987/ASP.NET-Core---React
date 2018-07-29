@@ -10,6 +10,7 @@ using reactredux.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
+using System.Text;
 
 namespace reactredux
 {
@@ -38,11 +39,20 @@ namespace reactredux
             });
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                    .AddJwtBearer(options =>
+                .AddJwtBearer(cfg =>
+                {
+                    cfg.TokenValidationParameters = new TokenValidationParameters()
                     {
-                        options.RequireHttpsMetadata = false;
-                        options.TokenValidationParameters = AuthOptions.GetTokenValidationParameters();
-                    });
+                        ValidateIssuer = true,
+                        ValidIssuer = Configuration["Security:Tokens:Issuer"],
+
+                        ValidateAudience = true,
+                        ValidAudience = Configuration["Security:Tokens:Audience"],
+
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Security:Tokens:Key"])),
+                    };
+                });
 
             services.AddTransient<AppDbContext>();
             // add repository service

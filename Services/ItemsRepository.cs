@@ -41,7 +41,6 @@ namespace reactredux.Services
             await appDBContext.Items
                                .InsertOneAsync(item);
             
-            var count = appDBContext.Items.Count(_ => true);
             return true;
         }
 

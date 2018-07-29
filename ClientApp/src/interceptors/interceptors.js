@@ -12,7 +12,7 @@ axios.interceptors.request.use((request) => {
     if ( token ) {
         request.headers = {
             ...request.headers,
-            "Authorization" : "Bearer " + token
+            "Authorization" : "bearer " + token
         };
     }
 

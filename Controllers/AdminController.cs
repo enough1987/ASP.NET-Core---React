@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace reactredux.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class AdminController : Controller
     {
 
@@ -19,7 +21,8 @@ namespace reactredux.Controllers
         {
             return Json(new
             {
-                Role = "Admin"
+                Role = "Admin",
+
             });
         }
     }
