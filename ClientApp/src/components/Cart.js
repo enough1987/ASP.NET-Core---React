@@ -33,6 +33,7 @@ class Cart extends Component {
     }
 
   render() {
+    console.log(this.props.items);
 
     return (
       <div>
@@ -53,8 +54,6 @@ class Cart extends Component {
           </div>
         <div className="cart-items" >
         { this.props.items.map((item) => {
-
-          console.log(item);
 
           return (
             <div key={item.Id} className="cart-item" >
@@ -85,11 +84,12 @@ class Cart extends Component {
     add = () => {
         this.props.add(this.state.newItem)
             .then((res) => {
+                console.log('data is fatched', res);
                 if (!res) {
                     return;
                 }
+                this.props.fetchItems();
             });
-        this.props.fetchItems();
     }
 
 }

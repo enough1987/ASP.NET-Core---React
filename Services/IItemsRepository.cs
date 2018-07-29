@@ -6,17 +6,17 @@ namespace reactredux.Services
 {
     public interface IItemsRepository
     {
-        IEnumerable<Item> GetAll();
+        Task<List<Item>> GetAll();
 
-        Item GetById(string id);
+        Task<Item> GetById(string id);
 
         // add new item
-        Task<bool> AddItem(Item item);
+        Task<bool> Add(Item item);
 
         // update just a single item
-        Task<bool> UpdateItem(Item item);
+        Task<bool> Update(Item item);
 
         // remove a single document / note
-        Task<bool> DeleteItem(string id);
+        Task<bool> Delete(string id);
     }
 }

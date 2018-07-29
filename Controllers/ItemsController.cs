@@ -16,45 +16,45 @@ namespace reactredux.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetItem(string id)
+        public async Task<JsonResult> GetItem(string id)
         {
-            var item = itemsRepository.GetById(id);
+            var item = await itemsRepository.GetById(id);
 
             return Json(item);
         }
 
         [HttpGet]
-        public JsonResult GetAll()
+        public async Task<JsonResult> GetAll()
         {
 
-            var items = itemsRepository.GetAll();
+            var items = await itemsRepository.GetAll();
 
             return Json(items);
         }
 
         [HttpPost]
-        public JsonResult Add(Item item)
+        public async Task<JsonResult> Add(Item item)
         {
-
-            var res = itemsRepository.AddItem(item);
+            
+            var res = await itemsRepository.Add(item);
 
             return Json(res);
         }
 
         [HttpPost]
-        public JsonResult Update(Item item)
+        public async Task<JsonResult> Update(Item item)
         {
 
-            var res = itemsRepository.UpdateItem(item);
+            var res = await itemsRepository.Update(item);
 
             return Json(res);
         }
 
-        [HttpGet]
-        public JsonResult Delete(string id)
+        [HttpDelete]
+        public async Task<JsonResult> Delete(string id)
         {
             
-            var res = itemsRepository.DeleteItem(id);
+            var res = await itemsRepository.Delete(id);
 
             return Json(res);
         }

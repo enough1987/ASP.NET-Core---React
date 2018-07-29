@@ -1,4 +1,5 @@
-﻿
+﻿import axios from '../interceptors/interceptors';
+
 const SHOP_TYPES = Object.freeze({
   SET_ITEMS : 'SET_ITEMS'
 });
@@ -12,9 +13,11 @@ export const actionCreators = {
   fetchItems: () => async (dispatch) => {    
 
     const url = `api/Items/GetAll`;
-    const response = await fetch(url);
-    const items = await response.json();
-    console.log(items);
+    const response = await axios.get(url);
+
+    const items = response.data;
+
+    console.log(' -- ', items);
 
     dispatch({ type: SHOP_TYPES.SET_ITEMS, payload: items });
   },
@@ -25,15 +28,13 @@ export const actionCreators = {
     const formData = new FormData();
     Object.keys(newItem).forEach(key => formData.append(key, newItem[key]));
 
-    const response = await fetch(url, {
-          method: 'POST',
-          body: formData
-      });
-    const item = await response.json();
+    const response = await axios.post(url,
+        formData
+    );
 
-    console.log(formData, item);
+    console.log(formData, response.data);
 
-    if ( item.Result ) {
+    if ( response.data ) {
       return true;
     }
     return false

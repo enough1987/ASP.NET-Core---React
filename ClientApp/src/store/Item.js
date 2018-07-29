@@ -1,4 +1,4 @@
-﻿
+﻿import axios from '../interceptors/interceptors';
 
 const ITEM_TYPES = Object.freeze({
   REQUEST_ITEM : 'REQUEST_ITEM',
@@ -18,9 +18,15 @@ export const actionCreators = {
 
     dispatch({ type: ITEM_TYPES.REQUEST_ITEM });
 
-    const url = `api/Items/GetItem?Id=${id}`;
-    const response = await fetch(url);
-    const item = await response.json();
+    const url = `api/Items/GetItem`;
+
+    const response = await axios.get(url, {
+        params: {
+            id
+        }
+    });
+
+    const item = response.data;
 
     dispatch({ type: ITEM_TYPES.SET_ITEM, payload: item });
 
@@ -38,14 +44,14 @@ export const actionCreators = {
       const formData = new FormData();
       Object.keys(newItem).forEach(key => formData.append(key, newItem[key]));
 
-      const response = await fetch(url, {
-          method: 'POST',
-          body: formData
-      });
+      const response = await axios.post(
+          url,
+          formData
+      );
 
       console.log(formData, response);
 
-      if ( response.ok ) {
+      if ( response.data) {
           return true;
       }
       return false
@@ -54,11 +60,15 @@ export const actionCreators = {
       console.log(id);
       dispatch({ type: ITEM_TYPES.REQUEST_ITEM_DELETE });
 
-      const url = `api/Items/Delete?id=`+id;
+      const url = `api/Items/Delete`;
 
-      const response = await fetch(url);
+      const response = await axios.delete(url, {
+          params: { id }
+      });
 
-      if ( response.ok ) {
+      console.log(response);
+
+      if ( response.data ) {
           return true;
       }
       return false

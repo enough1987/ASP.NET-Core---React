@@ -17,30 +17,35 @@ namespace reactredux.Services
             appDBContext = _appDbContext;
         }
 
-        public IEnumerable<Item> GetAll()
+        public Task<List<Item>> GetAll()
         {
-            return appDBContext.Items
+            var items = appDBContext.Items
                                .Find(m => true)
                                .ToList();
+
+            return Task.FromResult(items);
         }
 
         // query after Id or InternalId (BSonId value)
-        public Item GetById(string id)
+        public Task<Item> GetById(string id)
         {
-            return appDBContext.Items
+            var item = appDBContext.Items
                                .Find(m => m.Id == id)
                                .FirstOrDefault();
+            
+            return Task.FromResult(item);
         }
 
-        public Task<bool> AddItem(Item item)
+        public async Task<bool> Add(Item item)
         {
-            var result = appDBContext.Items
+            await appDBContext.Items
                                .InsertOneAsync(item);
             
-            return Task.FromResult(true);
+            var count = appDBContext.Items.Count(_ => true);
+            return true;
         }
 
-        public Task<bool> UpdateItem(Item item)
+        public Task<bool> Update(Item item)
         {
           
             //Build the where condition  
@@ -59,7 +64,7 @@ namespace reactredux.Services
             return Task.FromResult(true);
         }
 
-        public Task<bool> DeleteItem(string id)
+        public Task<bool> Delete(string id)
         {
  
             //Delete the customer record  
@@ -71,6 +76,7 @@ namespace reactredux.Services
             }
             return Task.FromResult(true); 
         }
+
     }
 }
 

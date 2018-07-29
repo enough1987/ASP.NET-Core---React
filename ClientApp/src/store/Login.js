@@ -17,11 +17,8 @@ export const actionCreators = {
 
         const url = `api/Authenticate/Token`;
 
-        let formData  = new FormData();
-
-        for(let name in data) {
-            formData.append(name, data[name]);
-        }
+        const formData  = new FormData();
+        Object.keys(data).forEach(key => formData.append(key, data[key]));
 
         const response = await axios.post(
             url,
