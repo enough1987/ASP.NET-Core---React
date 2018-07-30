@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import FormErrors from './FormErrors';
-import {connect} from 'react-redux';
-import {actionCreators} from '../store/Login';
-import { bindActionCreators } from 'redux';
 
 class Register extends Component {
 
@@ -81,7 +78,7 @@ class Register extends Component {
     }
 
     handleSubmit = () => {
-        this.props.login(this.state.user);
+        this.props.register(this.state.user);
     }
 
     validateField = (fieldName, value) => {
@@ -116,7 +113,4 @@ class Register extends Component {
 
 }
 
-export default connect(
-    state => state,
-    dispatch => bindActionCreators(actionCreators, dispatch)
-)(Register);
+export default Register;

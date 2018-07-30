@@ -29,7 +29,14 @@ class Admin extends Component {
         return (
             <div>
 
-                Admin panel
+                <p>
+                    Admin panel
+                </p>
+
+                <input type="button"
+                       className='btn btn-primary'
+                       value="Logout"
+                       onClick={() => this.logout()} />
 
             </div>
         )
@@ -40,19 +47,23 @@ class Admin extends Component {
             <div>
                 <input type="button"
                        className='btn btn-primary'
-                       value="Sign up"
-                       disabled={this.state.authTab == "Sign up"}
-                       onClick={() => this.changeAuthTab("Sign up")} />
+                       value="Sign in"
+                       disabled={this.state.authTab === "Sign in"}
+                       onClick={() => this.changeAuthTab("Sign in")} />
                 <input type="button"
                        className='btn btn-primary'
-                       value="Sign in"
-                       disabled={this.state.authTab == "Sign in"}
-                       onClick={() => this.changeAuthTab("Sign in")} />
+                       value="Sign up"
+                       disabled={this.state.authTab === "Sign up"}
+                       onClick={() => this.changeAuthTab("Sign up")} />
                 <div>
-                    {  this.state.authTab == "Sign up" ? <Login /> : <Register /> }
+                    {  this.state.authTab === "Sign up" ? <Register register={this.props.register} /> : <Login login={this.props.login} /> }
                 </div>
             </div>
         )
+    }
+
+    logout = () => {
+        this.props.logout();
     }
 
     changeAuthTab = (authTab) => {

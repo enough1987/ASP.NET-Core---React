@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import FormErrors from './FormErrors';
-import {connect} from 'react-redux';
-import {actionCreators} from '../store/Login';
-import { bindActionCreators } from 'redux';
 
 class Login extends Component {
 
@@ -51,7 +48,7 @@ class Login extends Component {
                         className='btn btn-primary'
                         onClick={this.handleSubmit}
                         disabled={!this.state.formValid}
-                        value="Sign up"
+                        value="Sign in"
                     />
                 </form>
 
@@ -111,7 +108,4 @@ class Login extends Component {
 
 }
 
-export default connect(
-    state => state,
-    dispatch => bindActionCreators(actionCreators, dispatch)
-)(Login);
+export default Login;
