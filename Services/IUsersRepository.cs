@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using reactredux.Models;
 
@@ -6,12 +7,17 @@ namespace reactredux.Services
 {
     public interface IUsersRepository
     {
-            Task<User> GetUser(string id);
+        Task<List<User>> GetAll();
 
-            Task<User> AddUser(User item);
+        Task<User> GetById(string id);
 
-            //Task<bool> RemoveUser(string id);
+        // add new item
+        Task<bool> Add(User item);
 
-            //Task<bool> UpdateUser(User item);
+        // update just a single item
+        Task<bool> Update(User item);
+
+        // remove a single document / note
+        Task<bool> Delete(string id);
     }
 }

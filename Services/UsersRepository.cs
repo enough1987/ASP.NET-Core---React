@@ -11,47 +11,74 @@ namespace reactredux.Services
 {
 	public class UsersRepository : IUsersRepository
     {
-        private readonly AppDbContext appDbContext = null;
+        private readonly AppDbContext appDBContext = null;
 
         public UsersRepository(AppDbContext _appDbContext)
-         {
-            appDbContext = _appDbContext;
-         }
-
-        public async Task<User> GetUser(string id) 
-         {
-            try
-            {
-                ObjectId internalId = GetInternalId(id);
-
-                return await appDbContext.Users
-                     .Find(user => user.Id == id
-                    || user.InternalId == internalId)
-                .FirstOrDefaultAsync();
-
-            }
-            catch (Exception ex)
-            {
-                // log or manage the exception
-                throw ex;
-            }
-         }
-
-
-            private ObjectId GetInternalId(string id)
-            {
-                ObjectId internalId;
-                if (!ObjectId.TryParse(id, out internalId))
-                    internalId = ObjectId.Empty;
-            
-                return internalId;
-            }
-
-        public async Task<User> AddUser(User user)
         {
-            await Task.Delay(0);
-
-            return user;
+            appDBContext = _appDbContext;
         }
+
+
+        public Task<List<User>> GetAll()
+        {
+            var users = appDBContext.Users
+                               .Find(m => true)
+                               .ToList();
+
+            return Task.FromResult(users);
+        }
+
+        // query after Id or InternalId (BSonId value)
+        public Task<User> GetById(string id)
+        {
+            var user = appDBContext.Users
+                               .Find(m => m.Id == id)
+                               .FirstOrDefault();
+
+            return Task.FromResult(user);
+        }
+
+        public async Task<bool> Add(User user)
+        {
+            await appDBContext.Users
+                               .InsertOneAsync(user);
+
+            return true;
+        }
+
+        public Task<bool> Update(User user)
+        {
+
+            //Build the where condition  
+            var filter = Builders<User>.Filter.Eq("Id", user.Id);
+            //Build the update statement   
+            var updatestatement = Builders<User>.Update.Set("Id", user.Id)
+                                                .Set("Username", user.Username)
+                                                .Set("Email", user.Email)
+                                                .Set("Password", user.Password)
+                                                .Set("Role", user.Role);
+            //fetch the details from CustomerDB based on id and pass into view  
+            var result = appDBContext.Users.UpdateOne(filter, updatestatement);
+
+            if (result.IsAcknowledged == false)
+            {
+                return Task.FromResult(false);
+            }
+            return Task.FromResult(true);
+        }
+
+        public Task<bool> Delete(string id)
+        {
+
+            //Delete the customer record  
+            var result = appDBContext.Users.DeleteOne<User>(user => user.Id == id);
+
+            if (result.IsAcknowledged == false)
+            {
+                return Task.FromResult(false);
+            }
+            return Task.FromResult(true);
+        }
+
     }
 }

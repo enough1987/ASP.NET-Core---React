@@ -12,22 +12,19 @@ using reactredux.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using System.Text;
+using reactredux.Services;
 
 namespace reactredux.Controllers
 {
     public class AuthenticateController : Controller
     {
-        private List<User> users = new List<User>
-        {
-            new User {Email="admin@gmail.com", Password="12345", Role = "admin" },
-            new User { Email="qwerty@gmail.com", Password="55555", Role = "user" }
-        };
-
         public IConfiguration Configuration { get; }
+        private readonly IUsersRepository usersRepository;
 
-        public AuthenticateController (IConfiguration configuration) 
+        public AuthenticateController (IConfiguration configuration, IUsersRepository _usersRepository)
         {
             Configuration = configuration;
+            usersRepository = _usersRepository;
         }
 
         [HttpPost]
@@ -45,22 +42,32 @@ namespace reactredux.Controllers
             var email = Request.Form["email"];
             var password = Request.Form["password"];
 
-            User user = new User()
+            User user = new User
             {
                 Username = username,
                 Email = email,
                 Password = password,
-                Role = "User"
+                Role = "user"
 
             };
 
+            usersRepository.Add(user);
+
             return Token(email, password);
+        }
+
+        [HttpGet]
+        public async Task<List<User>> GetAllUsers () 
+        {
+            var users = await usersRepository.GetAll();
+
+            return users;
         }
 
         private async Task Token(string email, string password)
         {
 
-            var identity = GetIdentity(email, password);
+            var identity = await GetIdentity(email, password);
             if (identity == null)
             {
                 Response.StatusCode = 400;
@@ -94,8 +101,10 @@ namespace reactredux.Controllers
             await Response.WriteAsync(JsonConvert.SerializeObject(response, new JsonSerializerSettings { Formatting = Formatting.Indented }));
         }            
 
-        private ClaimsIdentity GetIdentity(string email, string password)
+        private async Task<ClaimsIdentity> GetIdentity(string email, string password)
         {
+            var users = await usersRepository.GetAll();
+
 			User user = users.FirstOrDefault(x => x.Email == email && x.Password == password);
             if (user != null)
             {

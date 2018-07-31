@@ -14,6 +14,7 @@ class Register extends Component {
             formErrors: {email: '', password: '', confirm_password: ''},
             emailValid: false,
             passwordValid: false,
+            confirm_passwordValid: false,
             formValid: false
         }
     }
@@ -78,9 +79,6 @@ class Register extends Component {
     }
 
     handleSubmit = () => {
-        if ( this.state.user.password !== this.state.user.confirm_password ) {
-            return;
-        }
         this.props.register(this.state.user);
     }
 
@@ -88,15 +86,20 @@ class Register extends Component {
         let fieldValidationErrors = this.state.formErrors;
         let emailValid = this.state.emailValid;
         let passwordValid = this.state.passwordValid;
+        let confirm_passwordValid = this.state.confirm_passwordValid;
 
         switch(fieldName) {
             case 'email':
                 emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
                 fieldValidationErrors.email = emailValid ? '' : ' is invalid';
                 break;
-            case 'password && confirm_password':
+            case 'password':
                 passwordValid = value.length >= 5;
                 fieldValidationErrors.password = passwordValid ? '': ' is too short';
+                break;
+            case 'confirm_password':
+                confirm_passwordValid = value.length >= 5;
+                fieldValidationErrors.confirm_passwordValid = confirm_passwordValid ? '': ' is too short';
                 break;
             default:
                 break;
@@ -104,7 +107,8 @@ class Register extends Component {
 
         this.setState({formErrors: fieldValidationErrors,
             emailValid: emailValid,
-            passwordValid: passwordValid
+            passwordValid: passwordValid,
+            confirm_passwordValid: confirm_passwordValid
         }, this.validateForm);
     }
 

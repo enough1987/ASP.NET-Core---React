@@ -15,6 +15,7 @@ class Login extends Component {
             passwordValid: false,
             formValid: false
         }
+        this.props.getAllUsers();
     }
 
     render() {
@@ -53,7 +54,9 @@ class Login extends Component {
                 </form>
 
                 <div>
-                    Username="admin@gmail.com", Password="12345"
+                    { this.props.users.map((user) => {
+                        return <p key={ user.Id }> Email : { user.Email } , Password : { user.Password } , Role : { user.Role } </p>
+                    }) }
                 </div>
 
             </div>

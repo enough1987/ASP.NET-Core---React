@@ -57,6 +57,7 @@ namespace reactredux
             services.AddTransient<AppDbContext>();
             // add repository service
             services.AddTransient<IItemsRepository, ItemsRepository>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
 
             services.AddMvc()
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)

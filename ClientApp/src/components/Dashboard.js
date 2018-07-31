@@ -51,7 +51,10 @@ class Dashboard extends Component {
                        disabled={this.state.authTab === "Sign up"}
                        onClick={() => this.changeAuthTab("Sign up")} />
                 <div>
-                    {  this.state.authTab === "Sign up" ? <Register register={this.props.register} /> : <Login login={this.props.login} /> }
+                    {  this.state.authTab === "Sign up"
+                        ? <Register register={this.props.register} />
+                        : <Login login={this.props.login} users={this.props.users} getAllUsers={this.props.getAllUsers} />
+                    }
                 </div>
             </div>
         )

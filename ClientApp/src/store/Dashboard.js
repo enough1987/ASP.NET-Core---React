@@ -7,11 +7,13 @@ const AUTHORISATION_TYPES = Object.freeze({
     REQUEST_LOGIN: 'REQUEST_LOGIN',
     REQUEST_FAILED: 'REQUEST_FAILED',
     LOGIN: 'LOGIN',
-    LOGOUT: 'LOGOUT'
+    LOGOUT: 'LOGOUT',
+    SET_USERS: 'SET_USERS'
 });
 
 const initialState = {
     user: {},
+    users: [],
     isLoading: true,
     isAuthenticated: false
 };
@@ -22,6 +24,7 @@ export const actionCreators = {
         dispatch({ type: AUTHORISATION_TYPES.REQUEST_IS_AUTHENTICATED });
 
             const url = `api/Admin/IsAdmin`;
+
             const response = await axios.post(url)
                 .then((data) => {
                     console.log('++++++', data, );
@@ -39,6 +42,17 @@ export const actionCreators = {
                         dispatch({ type: AUTHORISATION_TYPES.REQUEST_FAILED });
                     }
                 });
+    },
+    getAllUsers: () => async (dispatch) => {
+
+        const url = `api/Authenticate/GetAllUsers`;
+
+        const response = await axios.get(url)
+            .then((data) => {
+               dispatch({ type: AUTHORISATION_TYPES.SET_USERS, payload: data.data });
+            })
+            .catch((e) => {
+            });
     },
     login: (data) => async (dispatch) => {
 
@@ -81,7 +95,7 @@ export const actionCreators = {
 
         console.log(response, data);
 
-        if (response.data && response.data.access_token) {
+        if (response && response.data && response.data.access_token) {
             dispatch({ type: AUTHORISATION_TYPES.IS_AUTHENTICATED });
         }
 
@@ -126,6 +140,13 @@ export const reducer = (state, action) => {
             isAuthenticated: false
 
         };
+    }
+
+    if ( action.type === AUTHORISATION_TYPES.SET_USERS ) {
+        return {
+            ... state,
+            users: action.payload
+        }
     }
 
     return state;
