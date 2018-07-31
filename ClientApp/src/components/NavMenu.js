@@ -24,9 +24,9 @@ export default props => (
             <Glyphicon glyph='th-list' /> Cart
           </NavItem>
         </LinkContainer>
-          <LinkContainer to={'/admin'}>
+          <LinkContainer to={'/dashboard'}>
               <NavItem>
-                  <Glyphicon glyph='th-list' /> Admin
+                  <Glyphicon glyph='th-list' /> Dashboard
               </NavItem>
           </LinkContainer>
       </Nav>

@@ -78,6 +78,9 @@ class Register extends Component {
     }
 
     handleSubmit = () => {
+        if ( this.state.user.password !== this.state.user.confirm_password ) {
+            return;
+        }
         this.props.register(this.state.user);
     }
 

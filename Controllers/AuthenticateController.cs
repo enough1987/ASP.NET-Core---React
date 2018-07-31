@@ -31,10 +31,34 @@ namespace reactredux.Controllers
         }
 
         [HttpPost]
-        public async Task Token()
-        {
+        public Task Login () {
             var email = Request.Form["email"];
             var password = Request.Form["password"];
+
+            return Token(email, password);
+        }
+
+        [HttpPost]
+        public Task Register()
+        {
+            var username = Request.Form["username"];
+            var email = Request.Form["email"];
+            var password = Request.Form["password"];
+
+            User user = new User()
+            {
+                Username = username,
+                Email = email,
+                Password = password,
+                Role = "User"
+
+            };
+
+            return Token(email, password);
+        }
+
+        private async Task Token(string email, string password)
+        {
 
             var identity = GetIdentity(email, password);
             if (identity == null)

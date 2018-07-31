@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { actionCreators } from '../store/Admin';
+import { actionCreators } from '../store/Dashboard';
 import Login from './Login';
 import Register from './Register';
 
-class Admin extends Component {
+class Dashboard extends Component {
 
     constructor(props) {
         super(props);
@@ -18,25 +18,20 @@ class Admin extends Component {
     render() {
         console.log( ' PROPS : ', this.props, this.props.isLoading , this.props.isAuthenticated );
 
-        if ( this.props.isLoading ) {
-            return <div> is loading </div>
-        }
-
-        if ( !this.props.isLoading && !this.props.isAuthenticated ) {
-            return this.getRigistration();
-        }
-
         return (
             <div>
 
-                <p>
-                    Admin panel
-                </p>
+                <div style={{display: this.props.isLoading ? 'block' : 'none' }}>
+                    <div> is loading </div>
+                </div>
 
-                <input type="button"
-                       className='btn btn-primary'
-                       value="Logout"
-                       onClick={() => this.logout()} />
+                <div style={{display: !this.props.isLoading && !this.props.isAuthenticated ? 'block' : 'none' }}>
+                    { this.getRigistration() }
+                </div>
+
+                <div style={{display: !this.props.isLoading && this.props.isAuthenticated ? 'block' : 'none' }}>
+                    { this.getAdminPanel() }
+                </div>
 
             </div>
         )
@@ -62,6 +57,23 @@ class Admin extends Component {
         )
     }
 
+    getAdminPanel = () => {
+        return (
+            <div>
+
+                <p>
+                    Admin panel
+                </p>
+
+                <input type="button"
+                       className='btn btn-primary'
+                       value="Logout"
+                       onClick={() => this.logout()} />
+
+            </div>
+        )
+    }
+
     logout = () => {
         this.props.logout();
     }
@@ -76,4 +88,4 @@ class Admin extends Component {
 export default connect(
     state => state.admin,
     dispatch => bindActionCreators(actionCreators, dispatch)
-)(Admin);
+)(Dashboard);

@@ -14,7 +14,6 @@ namespace reactredux.Controllers
     public class AdminController : Controller
     {
 
-
         [Authorize(Roles = "admin")]
         [HttpPost]
         public JsonResult IsAdmin()

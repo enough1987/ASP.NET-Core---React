@@ -5,6 +5,7 @@ const AUTHORISATION_TYPES = Object.freeze({
     IS_AUTHENTICATED : 'IS_AUTHENTICATED',
     IS_NOT_AUTHENTICATED: 'IS_NOT_AUTHENTICATED',
     REQUEST_LOGIN: 'REQUEST_LOGIN',
+    REQUEST_FAILED: 'REQUEST_FAILED',
     LOGIN: 'LOGIN',
     LOGOUT: 'LOGOUT'
 });
@@ -34,14 +35,16 @@ export const actionCreators = {
                     const {status} = e.response;
                     if (status !== 200) {
                         dispatch({ type: AUTHORISATION_TYPES.IS_NOT_AUTHENTICATED });
+                    } else {
+                        dispatch({ type: AUTHORISATION_TYPES.REQUEST_FAILED });
                     }
                 });
     },
     login: (data) => async (dispatch) => {
 
-        dispatch({ type: AUTHORISATION_TYPES.REQUEST_LOGIN });
+        //dispatch({ type: AUTHORISATION_TYPES.REQUEST_LOGIN });
 
-        const url = `api/Authenticate/Token`;
+        const url = `api/Authenticate/Login`;
 
         const formData  = new FormData();
         Object.keys(data).forEach(key => formData.append(key, data[key]));
@@ -49,20 +52,22 @@ export const actionCreators = {
         const response = await axios.post(
             url,
             formData
-        );
+        ).catch((e) => {
+            dispatch({ type: AUTHORISATION_TYPES.REQUEST_FAILED });
+        });
 
         console.log(response, data);
 
-        if (response.data && response.data.access_token) {
+        if (response && response.data && response.data.access_token) {
             dispatch({ type: AUTHORISATION_TYPES.IS_AUTHENTICATED });
         }
 
     },
     register: (data) => async (dispatch) => {
 
-        dispatch({ type: AUTHORISATION_TYPES.REQUEST_LOGIN });
+        //dispatch({ type: AUTHORISATION_TYPES.REQUEST_LOGIN });
 
-        const url = `api/Authenticate/Token`;
+        const url = `api/Authenticate/Register`;
 
         const formData  = new FormData();
         Object.keys(data).forEach(key => formData.append(key, data[key]));
@@ -70,7 +75,9 @@ export const actionCreators = {
         const response = await axios.post(
             url,
             formData
-        );
+        ).catch((e) => {
+            dispatch({ type: AUTHORISATION_TYPES.REQUEST_FAILED });
+        });
 
         console.log(response, data);
 
@@ -111,7 +118,8 @@ export const reducer = (state, action) => {
     }
 
     if (action.type === AUTHORISATION_TYPES.IS_NOT_AUTHENTICATED
-        | action.type === AUTHORISATION_TYPES.LOGOUT) {
+        | action.type === AUTHORISATION_TYPES.LOGOUT
+        | action.type === AUTHORISATION_TYPES.REQUEST_FAILED) {
         return {
             ... state,
             isLoading: false,
