@@ -9,7 +9,7 @@ export default function configureStore(history, initialState) {
   const reducers = {
     items: Cart.reducer,
     item: Item.reducer,
-    admin: Dashboard.reducer
+    dashboard: Dashboard.reducer
   };
 
   const middleware = [

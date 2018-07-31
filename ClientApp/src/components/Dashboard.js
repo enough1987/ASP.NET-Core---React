@@ -9,10 +9,10 @@ class Dashboard extends Component {
 
     constructor(props) {
         super(props);
-        this.props.isAdmin();
         this.state = {
             authTab: "Sign in"
         }
+        this.props.isAuthorized();
     }
 
     render() {
@@ -64,15 +64,33 @@ class Dashboard extends Component {
         return (
             <div>
 
-                <p>
-                    Admin panel
-                </p>
+                <div style={{display: this.props.user.Role === 'Admin' ? 'block' : 'none' }}>
+                    <p>
+                        Admin dashboard panel
+                    </p>
 
+                    { this.getLogout() }
+                </div>
+
+                <div style={{display: this.props.user.Role === 'User' ? 'block' : 'none' }}>
+                    <p>
+                        User dashboard panel
+                    </p>
+
+                    { this.getLogout() }
+                </div>
+
+            </div>
+        )
+    }
+
+    getLogout = () => {
+        return (
+            <div>
                 <input type="button"
                        className='btn btn-primary'
                        value="Logout"
                        onClick={() => this.logout()} />
-
             </div>
         )
     }
@@ -89,6 +107,6 @@ class Dashboard extends Component {
 }
 
 export default connect(
-    state => state.admin,
+    state => state.dashboard,
     dispatch => bindActionCreators(actionCreators, dispatch)
 )(Dashboard);

@@ -15,24 +15,11 @@ namespace reactredux.Controllers
     public class AdminController : Controller
     {
 
-        [Authorize]
+        [Authorize(Roles = "Admin, User")]
         [HttpPost]
-        public JsonResult IsUser()
+        public Boolean isAuthorized()
         {
-            return Json(new
-            {
-                Role = "User",
-            });
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public JsonResult IsAdmin()
-        {
-            return Json(new
-            {
-                Role = "Admin",
-            });
+            return true;
         }
     }
 }

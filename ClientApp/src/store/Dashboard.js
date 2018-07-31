@@ -1,4 +1,5 @@
 import axios from '../interceptors/interceptors';
+import jwt from '../helpers/jwt-helper';
 
 const AUTHORISATION_TYPES = Object.freeze({
     REQUEST_IS_AUTHENTICATED: 'REQUEST_IS_AUTHENTICATED',
@@ -12,23 +13,27 @@ const AUTHORISATION_TYPES = Object.freeze({
 });
 
 const initialState = {
+    newUser: {},
     user: {},
     users: [],
     isLoading: true,
-    isAuthenticated: false
+    isAuthenticated: false,
 };
 
 export const actionCreators = {
-    isAdmin: () => async (dispatch) => {
+    isAuthorized: () => async (dispatch) => {
 
         dispatch({ type: AUTHORISATION_TYPES.REQUEST_IS_AUTHENTICATED });
 
-            const url = `api/Admin/IsAdmin`;
+            const url = `api/Admin/isAuthorized`;
 
             const response = await axios.post(url)
                 .then((data) => {
-                    console.log('++++++', data, );
-                    dispatch({ type: AUTHORISATION_TYPES.IS_AUTHENTICATED });
+                    const user = jwt.getUser();
+
+                    console.log('++++++', data, user);
+
+                    dispatch({ type: AUTHORISATION_TYPES.IS_AUTHENTICATED, payload: user });
                 })
                 .catch((e) => {
                     console.log('------');
@@ -41,11 +46,6 @@ export const actionCreators = {
                 });
     },
     getAllUsers: () => async (dispatch) => {
-
-        const token = localStorage.getItem("jwttoken");
-        if (token) {
-            console.log( 'USER FROM JWT ', actionCreators.parseJwt(token) );
-        }
 
         const url = `api/Authenticate/GetAllUsers`;
 
@@ -75,7 +75,9 @@ export const actionCreators = {
         console.log(response, data);
 
         if (response && response.data && response.data.access_token) {
-            dispatch({ type: AUTHORISATION_TYPES.IS_AUTHENTICATED });
+            const user = jwt.getUser();
+
+            dispatch({ type: AUTHORISATION_TYPES.IS_AUTHENTICATED, payload: user });
         }
 
     },
@@ -98,19 +100,16 @@ export const actionCreators = {
         console.log(response, data);
 
         if (response && response.data && response.data.access_token) {
-            dispatch({ type: AUTHORISATION_TYPES.IS_AUTHENTICATED });
+            const user = jwt.getUser();
+
+            dispatch({ type: AUTHORISATION_TYPES.IS_AUTHENTICATED, payload: user });
         }
 
     },
     logout: () => async (dispatch) => {
         localStorage.removeItem("jwttoken");
         dispatch({ type: AUTHORISATION_TYPES.LOGOUT });
-    },
-    parseJwt: (token) => {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
-        return JSON.parse(window.atob(base64));
-    },
+    }
 };
 
 export const reducer = (state, action) => {
@@ -128,7 +127,8 @@ export const reducer = (state, action) => {
     if (action.type === AUTHORISATION_TYPES.IS_AUTHENTICATED) {
         return {
             ...state,
-            user: {},
+            newUser: {},
+            user: action.payload,
             isLoading: false,
             isAuthenticated: true
         };
@@ -137,6 +137,7 @@ export const reducer = (state, action) => {
     if (action.type === AUTHORISATION_TYPES.LOGOUT) {
         return {
             ... state,
+            newUser: {},
             user: {},
             isLoading: false,
             isAuthenticated: false

@@ -112,6 +112,7 @@ namespace reactredux.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim("Email", user.Email),
+                    new Claim("Role", user.Role),
                     new Claim("roles", user.Role)
                 };
 
