@@ -25,6 +25,8 @@ namespace reactredux.Controllers
         {
             Configuration = configuration;
             usersRepository = _usersRepository;
+
+
         }
 
         [HttpPost]
@@ -46,9 +48,7 @@ namespace reactredux.Controllers
             {
                 Username = username,
                 Email = email,
-                Password = password,
-                Role = "user"
-
+                Password = password
             };
 
             usersRepository.Add(user);
@@ -108,14 +108,17 @@ namespace reactredux.Controllers
 			User user = users.FirstOrDefault(x => x.Email == email && x.Password == password);
             if (user != null)
             {
+
                 var claims = new List<Claim>
                 {
                     new Claim("Email", user.Email),
-                    new Claim("Role", user.Role)
+                    new Claim("roles", user.Role)
                 };
+
                 ClaimsIdentity claimsIdentity =
                 new ClaimsIdentity(claims, "Token", ClaimsIdentity.DefaultNameClaimType,
                     ClaimsIdentity.DefaultRoleClaimType);
+
                 return claimsIdentity;
             }
 

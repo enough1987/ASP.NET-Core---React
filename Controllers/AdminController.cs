@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -14,14 +15,23 @@ namespace reactredux.Controllers
     public class AdminController : Controller
     {
 
-        [Authorize(Roles = "admin")]
+        [Authorize]
+        [HttpPost]
+        public JsonResult IsUser()
+        {
+            return Json(new
+            {
+                Role = "User",
+            });
+        }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public JsonResult IsAdmin()
         {
             return Json(new
             {
                 Role = "Admin",
-
             });
         }
     }

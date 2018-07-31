@@ -18,7 +18,6 @@ namespace reactredux.Services
             appDBContext = _appDbContext;
         }
 
-
         public Task<List<User>> GetAll()
         {
             var users = appDBContext.Users

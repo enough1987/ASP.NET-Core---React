@@ -12,10 +12,10 @@ namespace reactredux.Services
         Task<User> GetById(string id);
 
         // add new item
-        Task<bool> Add(User item);
+        Task<bool> Add(User user);
 
         // update just a single item
-        Task<bool> Update(User item);
+        Task<bool> Update(User user);
 
         // remove a single document / note
         Task<bool> Delete(string id);

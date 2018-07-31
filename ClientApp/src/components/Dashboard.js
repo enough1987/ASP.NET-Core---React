@@ -11,7 +11,7 @@ class Dashboard extends Component {
         super(props);
         this.props.isAdmin();
         this.state = {
-            authTab: "Sign up"
+            authTab: "Sign in"
         }
     }
 

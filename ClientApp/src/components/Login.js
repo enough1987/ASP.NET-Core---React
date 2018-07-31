@@ -55,7 +55,7 @@ class Login extends Component {
 
                 <div>
                     { this.props.users.map((user) => {
-                        return <p key={ user.Id }> Email : { user.Email } , Password : { user.Password } , Role : { user.Role } </p>
+                        return <p key={ user.Id }> Email : { user.Email } , Password : { user.Password } , Roles : { user.Roles } </p>
                     }) }
                 </div>
 
@@ -90,7 +90,7 @@ class Login extends Component {
                 fieldValidationErrors.email = emailValid ? '' : ' is invalid';
                 break;
             case 'password':
-                passwordValid = value.length >= 5;
+                passwordValid = value.length >= 4;
                 fieldValidationErrors.password = passwordValid ? '': ' is too short';
                 break;
             default:

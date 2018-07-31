@@ -28,9 +28,6 @@ export const actionCreators = {
             const response = await axios.post(url)
                 .then((data) => {
                     console.log('++++++', data, );
-                    const token = localStorage.getItem("jwttoken");
-                    const user = actionCreators.parseJwt(token);
-                    console.log(user);
                     dispatch({ type: AUTHORISATION_TYPES.IS_AUTHENTICATED });
                 })
                 .catch((e) => {
@@ -44,6 +41,11 @@ export const actionCreators = {
                 });
     },
     getAllUsers: () => async (dispatch) => {
+
+        const token = localStorage.getItem("jwttoken");
+        if (token) {
+            console.log( 'USER FROM JWT ', actionCreators.parseJwt(token) );
+        }
 
         const url = `api/Authenticate/GetAllUsers`;
 
@@ -126,13 +128,23 @@ export const reducer = (state, action) => {
     if (action.type === AUTHORISATION_TYPES.IS_AUTHENTICATED) {
         return {
             ...state,
+            user: {},
             isLoading: false,
             isAuthenticated: true
         };
     }
 
+    if (action.type === AUTHORISATION_TYPES.LOGOUT) {
+        return {
+            ... state,
+            user: {},
+            isLoading: false,
+            isAuthenticated: false
+
+        };
+    }
+
     if (action.type === AUTHORISATION_TYPES.IS_NOT_AUTHENTICATED
-        | action.type === AUTHORISATION_TYPES.LOGOUT
         | action.type === AUTHORISATION_TYPES.REQUEST_FAILED) {
         return {
             ... state,

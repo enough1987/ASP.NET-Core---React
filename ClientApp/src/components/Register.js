@@ -94,11 +94,11 @@ class Register extends Component {
                 fieldValidationErrors.email = emailValid ? '' : ' is invalid';
                 break;
             case 'password':
-                passwordValid = value.length >= 5;
+                passwordValid = value.length >= 4;
                 fieldValidationErrors.password = passwordValid ? '': ' is too short';
                 break;
             case 'confirm_password':
-                confirm_passwordValid = value.length >= 5;
+                confirm_passwordValid = value.length >= 4;
                 fieldValidationErrors.confirm_passwordValid = confirm_passwordValid ? '': ' is too short';
                 break;
             default:
