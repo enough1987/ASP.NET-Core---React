@@ -39,7 +39,10 @@ class NavMenu extends Component {
                      </LinkContainer>
                      <LinkContainer to={'/dashboard'}>
                          <NavItem>
-                             <Glyphicon glyph='th-list' /> Dashboard
+                             <Glyphicon glyph='th-list' />
+                             <span>
+                                 { this.props.user.Role ? "Dashboard" : "Authorization" }
+                             </span>
                          </NavItem>
                      </LinkContainer>
                  </Nav>

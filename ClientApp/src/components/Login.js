@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import FormErrors from './FormErrors';
+import UserList from './UserList';
 
 class Login extends Component {
 
@@ -15,6 +16,7 @@ class Login extends Component {
             passwordValid: false,
             formValid: false
         }
+
         this.props.getAllUsers();
     }
 
@@ -53,11 +55,7 @@ class Login extends Component {
                     />
                 </form>
 
-                <div>
-                    { this.props.users.map((user) => {
-                        return <p key={ user.Id }> Email : { user.Email } , Password : { user.Password } , Roles : { user.Roles } </p>
-                    }) }
-                </div>
+                <UserList />
 
             </div>
         );

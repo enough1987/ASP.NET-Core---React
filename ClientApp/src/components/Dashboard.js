@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { actionCreators } from '../store/Dashboard';
 import Login from './Login';
 import Register from './Register';
+import UserList from './UserList';
 
 class Dashboard extends Component {
 
@@ -12,7 +13,6 @@ class Dashboard extends Component {
         this.state = {
             authTab: "Sign in"
         }
-        this.props.isAuthorized();
     }
 
     render() {
@@ -70,6 +70,8 @@ class Dashboard extends Component {
                     </p>
 
                     { this.getLogout() }
+
+                    <UserList />
                 </div>
 
                 <div style={{display: this.props.user.Role === 'User' ? 'block' : 'none' }}>
