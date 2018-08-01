@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {actionCreators} from '../store/Dashboard';
 
 class UserList extends Component {
 
@@ -13,7 +15,15 @@ class UserList extends Component {
         return (
             <div>
                 { this.props.users.map((user) => {
-                    return <p key={ user.Id }> Email : { user.Email } , Password : { user.Password } , Role : { user.Role } </p>
+                    return <p key={ user.Id }>
+                            <span> Email : { user.Email } </span> ,
+                            <span> Password : { user.Password } </span> ,
+                            <span> Role : { user.Role } </span> ,
+
+                            <input type="button" value="delete"
+                                   style={{display: this.props.user.Role === 'Admin' ? 'inline-block' : 'none' }}
+                                   onClick={() => this.props.deleteUser(user.Id)} />
+                        </p>
                 }) }
             </div>
         );
@@ -23,5 +33,5 @@ class UserList extends Component {
 
 export default connect(
     state => state.dashboard,
-    null
+    dispatch => bindActionCreators(actionCreators, dispatch)
 )(UserList);

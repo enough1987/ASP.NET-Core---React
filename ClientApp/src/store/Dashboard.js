@@ -9,7 +9,8 @@ const AUTHORISATION_TYPES = Object.freeze({
     REQUEST_FAILED: 'REQUEST_FAILED',
     LOGIN: 'LOGIN',
     LOGOUT: 'LOGOUT',
-    SET_USERS: 'SET_USERS'
+    SET_USERS: 'SET_USERS',
+    DELETE_USER: 'DELETE_USER'
 });
 
 const initialState = {
@@ -47,11 +48,22 @@ export const actionCreators = {
     },
     getAllUsers: () => async (dispatch) => {
 
-        const url = `api/Authenticate/GetAllUsers`;
+        const url = `api/Users/GetAllUsers`;
 
         const response = await axios.get(url)
             .then((data) => {
                dispatch({ type: AUTHORISATION_TYPES.SET_USERS, payload: data.data });
+            })
+            .catch((e) => {
+            });
+    },
+    deleteUser: (id) => async (dispatch) => {
+
+        const url = `api/Users/Delete?id=${id}`;
+
+        const response = await axios.delete(url)
+            .then(() => {
+                dispatch({ type: AUTHORISATION_TYPES.DELETE_USER, payload: id });
             })
             .catch((e) => {
             });
@@ -159,6 +171,13 @@ export const reducer = (state, action) => {
         return {
             ... state,
             users: action.payload
+        }
+    }
+
+    if ( action.type === AUTHORISATION_TYPES.DELETE_USER ) {
+        return {
+            ... state,
+            users: state.users.filter(user => user.Id !== action.payload)
         }
     }
 

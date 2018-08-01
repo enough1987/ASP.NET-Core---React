@@ -71,7 +71,7 @@ class Dashboard extends Component {
 
                     { this.getLogout() }
 
-                    <UserList />
+                    <UserList admin={true} />
                 </div>
 
                 <div style={{display: this.props.user.Role === 'User' ? 'block' : 'none' }}>

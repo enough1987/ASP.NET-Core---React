@@ -21,12 +21,10 @@ namespace reactredux.Controllers
         public IConfiguration Configuration { get; }
         private readonly IUsersRepository usersRepository;
 
-        public AuthenticateController (IConfiguration configuration, IUsersRepository _usersRepository)
+        public AuthenticateController(IConfiguration configuration, IUsersRepository _usersRepository)
         {
             Configuration = configuration;
             usersRepository = _usersRepository;
-
-
         }
 
         [HttpPost]
@@ -54,14 +52,6 @@ namespace reactredux.Controllers
             usersRepository.Add(user);
 
             return Token(email, password);
-        }
-
-        [HttpGet]
-        public async Task<List<User>> GetAllUsers () 
-        {
-            var users = await usersRepository.GetAll();
-
-            return users;
         }
 
         private async Task Token(string email, string password)

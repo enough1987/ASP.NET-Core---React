@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bf7496a6-e4b0-4c49-b0c3-b5b7549beb76" name="Default" comment="add user tab in menu">
-      <change beforePath="" afterPath="$PROJECT_DIR$/ClientApp/src/components/UserList.js" />
+    <list default="true" id="bf7496a6-e4b0-4c49-b0c3-b5b7549beb76" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/Controllers/UsersController.cs" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/ClientApp/src/components/Dashboard.js" afterPath="$PROJECT_DIR$/ClientApp/src/components/Dashboard.js" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/components/Layout.js" afterPath="$PROJECT_DIR$/ClientApp/src/components/Layout.js" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/components/Login.js" afterPath="$PROJECT_DIR$/ClientApp/src/components/Login.js" />
-      <change beforePath="$PROJECT_DIR$/ClientApp/src/components/NavMenu.js" afterPath="$PROJECT_DIR$/ClientApp/src/components/NavMenu.js" />
+      <change beforePath="$PROJECT_DIR$/ClientApp/src/components/UserList.js" afterPath="$PROJECT_DIR$/ClientApp/src/components/UserList.js" />
+      <change beforePath="$PROJECT_DIR$/ClientApp/src/store/Dashboard.js" afterPath="$PROJECT_DIR$/ClientApp/src/store/Dashboard.js" />
+      <change beforePath="$PROJECT_DIR$/Controllers/AuthenticateController.cs" afterPath="$PROJECT_DIR$/Controllers/AuthenticateController.cs" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -21,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Dashboard.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Dashboard.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ClientApp/src/store/Dashboard.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="47" column="15" lean-forward="false" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="15" />
+            <state relative-caret-position="684">
+              <caret line="179" column="55" lean-forward="false" selection-start-line="179" selection-start-column="55" selection-end-line="179" selection-end-column="55" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -46,7 +46,7 @@
       <file leaf-file-name="Login.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClientApp/src/components/Login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
+            <state relative-caret-position="648">
               <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="28" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
@@ -58,8 +58,8 @@
       <file leaf-file-name="UserList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClientApp/src/components/UserList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="36" lean-forward="false" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
+            <state relative-caret-position="360">
+              <caret line="24" column="84" lean-forward="false" selection-start-line="24" selection-start-column="84" selection-end-line="24" selection-end-column="84" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -67,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Dashboard.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Dashboard.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ClientApp/src/components/Dashboard.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="443">
-              <caret line="73" column="23" lean-forward="true" selection-start-line="73" selection-start-column="23" selection-end-line="73" selection-end-column="23" />
+            <state relative-caret-position="717">
+              <caret line="112" column="4" lean-forward="true" selection-start-line="112" selection-start-column="4" selection-end-line="112" selection-end-column="60" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -141,8 +141,8 @@
     <findStrings>
       <find>Login</find>
       <find>parseJwt</find>
-      <find>getAllUsers</find>
       <find>user</find>
+      <find>getAllUsers</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -166,15 +166,15 @@
         <option value="$PROJECT_DIR$/ClientApp/src/App.js" />
         <option value="$PROJECT_DIR$/ClientApp/src/components/Register.js" />
         <option value="$PROJECT_DIR$/ClientApp/src/interceptors/interceptors.js" />
-        <option value="$PROJECT_DIR$/ClientApp/src/store/Dashboard.js" />
         <option value="$PROJECT_DIR$/ClientApp/src/helpers/jwt-helper.js" />
         <option value="$PROJECT_DIR$/ClientApp/src/store/configureStore.js" />
         <option value="$PROJECT_DIR$/ClientApp/src/store/Layout.js" />
         <option value="$PROJECT_DIR$/ClientApp/src/components/Layout.js" />
         <option value="$PROJECT_DIR$/ClientApp/src/components/Login.js" />
         <option value="$PROJECT_DIR$/ClientApp/src/components/NavMenu.js" />
-        <option value="$PROJECT_DIR$/ClientApp/src/components/UserList.js" />
         <option value="$PROJECT_DIR$/ClientApp/src/components/Dashboard.js" />
+        <option value="$PROJECT_DIR$/ClientApp/src/components/UserList.js" />
+        <option value="$PROJECT_DIR$/ClientApp/src/store/Dashboard.js" />
       </list>
     </option>
   </component>
@@ -357,7 +357,7 @@
       <workItem from="1532847470758" duration="18286000" />
       <workItem from="1533032719235" duration="855000" />
       <workItem from="1533035748243" duration="8259000" />
-      <workItem from="1533124433213" duration="2258000" />
+      <workItem from="1533124433213" duration="3948000" />
     </task>
     <task id="LOCAL-00001" summary="add AUTHENTICATion with JWT">
       <created>1532026007043</created>
@@ -450,11 +450,18 @@
       <option name="project" value="LOCAL" />
       <updated>1533062884382</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="polishing">
+      <created>1533159445262</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1533159445262</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66384000" />
+    <option name="totallyTimeSpent" value="68074000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="61" y="23" width="1611" height="1006" extended-state="0" />
@@ -494,11 +501,11 @@
     <MESSAGE value="add interceptors" />
     <MESSAGE value="jwt token" />
     <MESSAGE value="add logout" />
-    <MESSAGE value="polishing" />
     <MESSAGE value="add users list to DB" />
     <MESSAGE value="add jwt role authentication" />
     <MESSAGE value="add user tab in menu" />
-    <option name="LAST_COMMIT_MESSAGE" value="add user tab in menu" />
+    <MESSAGE value="polishing" />
+    <option name="LAST_COMMIT_MESSAGE" value="polishing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -786,6 +793,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="39" lean-forward="false" selection-start-line="7" selection-start-column="39" selection-end-line="7" selection-end-column="39" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -793,6 +801,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -855,22 +864,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClientApp/src/store/Dashboard.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="47" column="15" lean-forward="false" selection-start-line="47" selection-start-column="4" selection-end-line="47" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ClientApp/src/components/Layout.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="34" lean-forward="false" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClientApp/src/components/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -885,32 +894,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ClientApp/src/components/UserList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="36" lean-forward="false" selection-start-line="1" selection-start-column="36" selection-end-line="1" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ClientApp/src/components/Login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ClientApp/src/components/Dashboard.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="73" column="23" lean-forward="true" selection-start-line="73" selection-start-column="23" selection-end-line="73" selection-end-column="23" />
+        <state relative-caret-position="717">
+          <caret line="112" column="4" lean-forward="true" selection-start-line="112" selection-start-column="4" selection-end-line="112" selection-end-column="60" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClientApp/src/components/UserList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="84" lean-forward="false" selection-start-line="24" selection-start-column="84" selection-end-line="24" selection-end-column="84" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ClientApp/src/store/Dashboard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="684">
+          <caret line="179" column="55" lean-forward="false" selection-start-line="179" selection-start-column="55" selection-end-line="179" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
           </folding>
         </state>
       </provider>
