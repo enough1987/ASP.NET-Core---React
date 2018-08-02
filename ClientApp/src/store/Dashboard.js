@@ -119,7 +119,7 @@ export const actionCreators = {
 
     },
     logout: () => async (dispatch) => {
-        localStorage.removeItem("jwttoken");
+        jwt.removeToken();
         dispatch({ type: AUTHORISATION_TYPES.LOGOUT });
     }
 };

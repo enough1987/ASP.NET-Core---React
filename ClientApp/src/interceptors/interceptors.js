@@ -1,5 +1,7 @@
 
 import * as axios from 'axios';
+import jwt from "../helpers/jwt-helper";
+
 
 
 // Add a response interceptor
@@ -7,7 +9,9 @@ axios.interceptors.request.use((request) => {
     // Do something with response data
     console.log("INTERCEPTOR REQUEST");
 
-    const token = localStorage.getItem("jwttoken");
+    const token = jwt.getToken();
+    const exp = jwt.isTokenExpired(token);
+    console.log(" EXP ", exp);
 
     if ( token ) {
         request.headers = {
@@ -15,7 +19,6 @@ axios.interceptors.request.use((request) => {
             "Authorization" : "bearer " + token
         };
     }
-
     return request;
 });
 
@@ -26,7 +29,7 @@ axios.interceptors.response.use((response) => {
 
     const token = response.headers.jwttoken;
     if ( token ) {
-        localStorage.setItem("jwttoken", token);
+        jwt.setToken(token);
     }
 
     return response;
