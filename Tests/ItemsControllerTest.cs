@@ -13,7 +13,7 @@ namespace reactredux.Tests
     public class ItemsControllerTests
     {
         [Fact]
-        public async void GetAllReturnsAllItemsAsJsonResult()
+        public async void GetAllReturnsAllItemsreturnAllItems()
         {
             // Arrange
             var items = GetTestItems();
@@ -27,9 +27,7 @@ namespace reactredux.Tests
             // Assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var model = Assert.IsAssignableFrom<IEnumerable<Item>>(viewResult.Model);
-
-            Assert.IsType<ViewResult>(result);
-            Assert.Equal( (await items).Count, model.Count());
+            Assert.Equal( (await items).Count, model.Count() );
         }
         private Task<List<Item>> GetTestItems()
         {
