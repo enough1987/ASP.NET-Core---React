@@ -77,6 +77,29 @@ namespace reactredux.Tests
             Assert.Null( result );
         }
 
+        [Theory]
+        [InlineData("Test", 100 )]
+        [InlineData("Test2", 1000 )]
+        [InlineData("Test3", 588 )]
+        public async void AddReturnsBoolAndAddItem(string name, int price)
+        {
+            // Arrange
+            var items = await GetTestItems();
+            var item = new Item() { Name = name, Price = price };
+            var mock = new Mock<IItemsRepository>();
+            mock.Setup(repo=>repo.Add(item)).Returns( Task.FromResult(true) );
+            var controller = new ItemsController(mock.Object);
+
+            // Act
+            var actual = await controller.Add(item);
+            var result = actual?.Value;
+
+            // Assert
+            Assert.IsType<JsonResult>(actual);
+            Assert.IsType<Boolean>( result );
+            Assert.Equal( true, result );
+        }
+
         private Task<List<Item>> GetTestItems()
         {
             var items = new List<Item>
