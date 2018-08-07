@@ -31,7 +31,7 @@ namespace reactredux.Services
         {
             var item = appDBContext.Items
                                .Find(m => m.Id == id)
-                               .FirstOrDefault();
+                               .FirstOrDefault();              
             
             return Task.FromResult(item);
         }

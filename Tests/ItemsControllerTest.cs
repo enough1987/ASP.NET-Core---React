@@ -31,6 +31,52 @@ namespace reactredux.Tests
             Assert.IsType<JsonResult>(actual);
             Assert.Equal( (await items).Count, result.Count() );
         }
+
+        [Theory]
+        [InlineData("1")]
+        [InlineData("3")]
+        [InlineData("4")]
+        public async void GetItemReturnsItem(string value)
+        {
+            // Arrange
+            var items = GetTestItems();
+            var item = new Item () { Id = value };
+            var mock = new Mock<IItemsRepository>();
+            mock.Setup(repo=>repo.GetById(value)).Returns( Task.FromResult(item) );
+            var controller = new ItemsController(mock.Object);
+
+            // Act
+            var actual = await controller.GetItem(value);
+            Item result = actual?.Value as Item;
+
+            // Assert
+            Assert.IsType<JsonResult>(actual);
+            Assert.Equal( item.Name, result.Name );
+        }
+
+
+        [Theory]
+        [InlineData("10")]
+        [InlineData("30")]
+        [InlineData("40")]
+        public async void GetItemReturnsNullIfNotFound(string value)
+        {
+            // Arrange
+            var items = await GetTestItems();
+            var item = items.Find( x => x.Id == value);
+            var mock = new Mock<IItemsRepository>();
+            mock.Setup(repo=>repo.GetById(value)).Returns( Task.FromResult(item) );
+            var controller = new ItemsController(mock.Object);
+
+            // Act
+            var actual = await controller.GetItem(value);
+            var result = actual?.Value;
+
+            // Assert
+            Assert.IsType<JsonResult>(actual);
+            Assert.Null( result );
+        }
+
         private Task<List<Item>> GetTestItems()
         {
             var items = new List<Item>
