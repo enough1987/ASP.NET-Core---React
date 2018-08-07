@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using reactredux.Services;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System;
 
 namespace reactredux.Tests
 {
@@ -22,12 +24,12 @@ namespace reactredux.Tests
             var controller = new ItemsController(mock.Object);
 
             // Act
-            var result = controller.GetAll();
+            var actual = await controller.GetAll();
+            List<Item> result = actual?.Value as List<Item>;
 
             // Assert
-            var viewResult = Assert.IsType<ViewResult>(result);
-            var model = Assert.IsAssignableFrom<IEnumerable<Item>>(viewResult.Model);
-            Assert.Equal( (await items).Count, model.Count() );
+            Assert.IsType<JsonResult>(actual);
+            Assert.Equal( (await items).Count, result.Count() );
         }
         private Task<List<Item>> GetTestItems()
         {
