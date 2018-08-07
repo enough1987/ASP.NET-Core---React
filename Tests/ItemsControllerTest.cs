@@ -123,13 +123,38 @@ namespace reactredux.Tests
             var mock = new Mock<IItemsRepository>();
             var returnedValue = !String.IsNullOrEmpty(item.Name) && item.Price > 0
                 ? true : false;
-            returnedValue = returnedValue && items.Find(x => x.Id == item.Id) == null
+            returnedValue = returnedValue && items.Find(x => x.Id == item.Id) != null
                 ? true : false;   
             mock.Setup(repo=>repo.Update(item)).Returns( Task.FromResult(returnedValue) );
             var controller = new ItemsController(mock.Object);
 
             // Act
             var actual = await controller.Update(item);
+            var result = actual?.Value;
+
+            // Assert
+            Assert.IsType<JsonResult>(actual);
+            Assert.IsType<Boolean>( result );
+            Assert.Equal( returnedValue, result );
+        }
+
+        [Theory]
+        [InlineData("1" )]
+        [InlineData("2" )]
+        [InlineData("20" )]
+        [InlineData("30" )]
+        public async void DeleteReturnsBoolAndDeleteItemIfItExist(string id)
+        {
+            // Arrange
+            var items = await GetTestItems();
+            var mock = new Mock<IItemsRepository>();
+            var returnedValue = items.Find(x => x.Id == id) != null
+                ? true : false;   
+            mock.Setup(repo=>repo.Delete(id)).Returns( Task.FromResult(returnedValue) );
+            var controller = new ItemsController(mock.Object);
+
+            // Act
+            var actual = await controller.Delete(id);
             var result = actual?.Value;
 
             // Assert
