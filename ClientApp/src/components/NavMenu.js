@@ -7,10 +7,6 @@ import {connect} from 'react-redux';
 
 class NavMenu extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render () {
      console.log("NAVMENU : ", this.props);
 

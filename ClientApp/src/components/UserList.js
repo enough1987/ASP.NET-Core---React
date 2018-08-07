@@ -5,10 +5,6 @@ import {actionCreators} from '../store/Dashboard';
 
 class UserList extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         console.log( ' PROPS : ', this.props );
 

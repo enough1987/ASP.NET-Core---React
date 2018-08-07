@@ -22,11 +22,11 @@ namespace reactredux.Controllers
         }
 
         [HttpGet]
-        public async Task<List<User>> GetAllUsers()
+        public async Task<JsonResult> GetAll()
         {
             var users = await usersRepository.GetAll();
 
-            return users;
+            return Json(users);
         }
 
         [HttpDelete]

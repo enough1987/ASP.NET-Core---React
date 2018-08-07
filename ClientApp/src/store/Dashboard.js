@@ -28,7 +28,7 @@ export const actionCreators = {
 
             const url = `api/Admin/isAuthorized`;
 
-            const response = await axios.post(url)
+            axios.post(url)
                 .then((data) => {
                     const user = jwt.getUser();
 
@@ -48,9 +48,9 @@ export const actionCreators = {
     },
     getAllUsers: () => async (dispatch) => {
 
-        const url = `api/Users/GetAllUsers`;
+        const url = `api/Users/GetAll`;
 
-        const response = await axios.get(url)
+        axios.get(url)
             .then((data) => {
                dispatch({ type: AUTHORISATION_TYPES.SET_USERS, payload: data.data });
             })
@@ -61,7 +61,7 @@ export const actionCreators = {
 
         const url = `api/Users/Delete?id=${id}`;
 
-        const response = await axios.delete(url)
+        axios.delete(url)
             .then(() => {
                 dispatch({ type: AUTHORISATION_TYPES.DELETE_USER, payload: id });
             })
@@ -148,7 +148,7 @@ export const reducer = (state, action) => {
 
     if (action.type === AUTHORISATION_TYPES.LOGOUT) {
         return {
-            ... state,
+            ...state,
             newUser: {},
             user: {},
             isLoading: false,
@@ -160,7 +160,7 @@ export const reducer = (state, action) => {
     if (action.type === AUTHORISATION_TYPES.IS_NOT_AUTHENTICATED
         | action.type === AUTHORISATION_TYPES.REQUEST_FAILED) {
         return {
-            ... state,
+            ...state,
             isLoading: false,
             isAuthenticated: false
 
@@ -169,14 +169,14 @@ export const reducer = (state, action) => {
 
     if ( action.type === AUTHORISATION_TYPES.SET_USERS ) {
         return {
-            ... state,
+            ...state,
             users: action.payload
         }
     }
 
     if ( action.type === AUTHORISATION_TYPES.DELETE_USER ) {
         return {
-            ... state,
+            ...state,
             users: state.users.filter(user => user.Id !== action.payload)
         }
     }

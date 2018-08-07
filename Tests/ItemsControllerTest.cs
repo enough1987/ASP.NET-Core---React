@@ -15,7 +15,7 @@ namespace reactredux.Tests
     public class ItemsControllerTests
     {
         [Fact]
-        public async void GetAllReturnsAllItemsreturnAllItems()
+        public async void GetAllReturnsAllItems()
         {
             // Arrange
             var items = GetTestItems();
