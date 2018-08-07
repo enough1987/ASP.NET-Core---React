@@ -81,13 +81,18 @@ namespace reactredux.Tests
         [InlineData("Test", 100 )]
         [InlineData("Test2", 1000 )]
         [InlineData("Test3", 588 )]
-        public async void AddReturnsBoolAndAddItem(string name, int price)
+        [InlineData("", 100 )]
+        [InlineData("Test2", -100 )]
+        [InlineData( "", -50 )]
+        public async void AddReturnsBoolAndAddItemIfValidItem(string name, int price)
         {
             // Arrange
             var items = await GetTestItems();
             var item = new Item() { Name = name, Price = price };
             var mock = new Mock<IItemsRepository>();
-            mock.Setup(repo=>repo.Add(item)).Returns( Task.FromResult(true) );
+            var returnedValue = !String.IsNullOrEmpty(item.Name) && item.Price > 0
+                ? true : false;
+            mock.Setup(repo=>repo.Add(item)).Returns( Task.FromResult(returnedValue) );
             var controller = new ItemsController(mock.Object);
 
             // Act
@@ -97,7 +102,40 @@ namespace reactredux.Tests
             // Assert
             Assert.IsType<JsonResult>(actual);
             Assert.IsType<Boolean>( result );
-            Assert.Equal( true, result );
+            Assert.Equal( returnedValue, result );
+        }
+
+        [Theory]
+        [InlineData("1", "Test", 100 )]
+        [InlineData("2", "Test2", 1000 )]
+        [InlineData("3", "Test3", 588 )]
+        [InlineData("" , "", 100 )]
+        [InlineData("", "Test2", -100 )]
+        [InlineData("", "", -50 )]
+        [InlineData("10", "Test", 100 )]
+        [InlineData("20", "Test2", 1000 )]
+        [InlineData("30", "Test3", 588 )]
+        public async void UpdateReturnsBoolAndAddItemIfValidItem(string id, string name, int price)
+        {
+            // Arrange
+            var items = await GetTestItems();
+            var item = new Item() { Id = id, Name = name, Price = price };
+            var mock = new Mock<IItemsRepository>();
+            var returnedValue = !String.IsNullOrEmpty(item.Name) && item.Price > 0
+                ? true : false;
+            returnedValue = returnedValue && items.Find(x => x.Id == item.Id) == null
+                ? true : false;   
+            mock.Setup(repo=>repo.Update(item)).Returns( Task.FromResult(returnedValue) );
+            var controller = new ItemsController(mock.Object);
+
+            // Act
+            var actual = await controller.Update(item);
+            var result = actual?.Value;
+
+            // Assert
+            Assert.IsType<JsonResult>(actual);
+            Assert.IsType<Boolean>( result );
+            Assert.Equal( returnedValue, result );
         }
 
         private Task<List<Item>> GetTestItems()
