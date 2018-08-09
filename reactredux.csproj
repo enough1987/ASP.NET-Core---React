@@ -14,6 +14,7 @@
   <ItemGroup>
      <!--  No Version needed -->
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="2.1.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
@@ -45,6 +46,7 @@
     <Compile Remove="Services\AppRepository.cs" />
     <Compile Remove="Controllers\SampleDataController %28copy%29.cs" />
     <Compile Remove="Models\AuthOptions.cs" />
+    <Compile Remove="Tests\Integration\ItemsControllertest.cs" />
   </ItemGroup>
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->

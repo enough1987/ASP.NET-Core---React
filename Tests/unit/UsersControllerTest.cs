@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
 
-namespace reactredux.Tests
+namespace reactredux.Tests.Unit
 {
     public class UsersControllerTests
     {

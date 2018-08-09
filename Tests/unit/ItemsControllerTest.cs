@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System;
 
-namespace reactredux.Tests
+namespace reactredux.Tests.Unit
 {
     public class ItemsControllerTests
     {
@@ -62,10 +62,7 @@ namespace reactredux.Tests
         public async void GetItemReturnsNullIfNotFound(string value)
         {
             // Arrange
-            var items = await GetTestItems();
-            var item = items.Find( x => x.Id == value);
             var mock = new Mock<IItemsRepository>();
-            mock.Setup(repo=>repo.GetById(value)).Returns( Task.FromResult(item) );
             var controller = new ItemsController(mock.Object);
 
             // Act
@@ -90,9 +87,6 @@ namespace reactredux.Tests
             var items = await GetTestItems();
             var item = new Item() { Name = name, Price = price };
             var mock = new Mock<IItemsRepository>();
-            var returnedValue = !String.IsNullOrEmpty(item.Name) && item.Price > 0
-                ? true : false;
-            mock.Setup(repo=>repo.Add(item)).Returns( Task.FromResult(returnedValue) );
             var controller = new ItemsController(mock.Object);
 
             // Act
@@ -102,7 +96,7 @@ namespace reactredux.Tests
             // Assert
             Assert.IsType<JsonResult>(actual);
             Assert.IsType<Boolean>( result );
-            Assert.Equal( returnedValue, result );
+            mock.Verify( x => x.Add(item));
         }
 
         [Theory]
@@ -121,11 +115,6 @@ namespace reactredux.Tests
             var items = await GetTestItems();
             var item = new Item() { Id = id, Name = name, Price = price };
             var mock = new Mock<IItemsRepository>();
-            var returnedValue = !String.IsNullOrEmpty(item.Name) && item.Price > 0
-                ? true : false;
-            returnedValue = returnedValue && items.Find(x => x.Id == item.Id) != null
-                ? true : false;   
-            mock.Setup(repo=>repo.Update(item)).Returns( Task.FromResult(returnedValue) );
             var controller = new ItemsController(mock.Object);
 
             // Act
@@ -135,7 +124,7 @@ namespace reactredux.Tests
             // Assert
             Assert.IsType<JsonResult>(actual);
             Assert.IsType<Boolean>( result );
-            Assert.Equal( returnedValue, result );
+            mock.Verify( x => x.Update(item));
         }
 
         [Theory]
