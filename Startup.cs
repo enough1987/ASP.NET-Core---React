@@ -58,6 +58,7 @@ namespace reactredux
             // add repository service
             services.AddTransient<IItemsRepository, ItemsRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
+            services.AddTransient<IEmailService, EmailService>();
 
             services.AddMvc()
                     .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
