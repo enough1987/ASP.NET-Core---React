@@ -4,12 +4,14 @@ import { routerReducer, routerMiddleware } from 'react-router-redux';
 import * as Cart from './Cart';
 import * as Item from './Item';
 import * as Dashboard from './Dashboard';
+import * as Email from './Email';
 
 export default function configureStore(history, initialState) {
   const reducers = {
     items: Cart.reducer,
     item: Item.reducer,
-    dashboard: Dashboard.reducer
+    dashboard: Dashboard.reducer,
+    email: Email.reducer
   };
 
   const middleware = [

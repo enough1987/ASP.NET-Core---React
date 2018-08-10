@@ -41,6 +41,11 @@ class NavMenu extends Component {
                              </span>
                          </NavItem>
                      </LinkContainer>
+                     <LinkContainer to={'/send-email'}>
+                         <NavItem>
+                             <Glyphicon glyph='th-list' /> Send Email
+                         </NavItem>
+                     </LinkContainer>
                  </Nav>
              </Navbar.Collapse>
          </Navbar>
